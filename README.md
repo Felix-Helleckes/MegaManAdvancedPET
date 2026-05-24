@@ -5,7 +5,7 @@ A MegaMan Battle Network inspired handheld experience for iOS & Android.
 ## Features
 - **Schrittzähler** → Cyber-Meter füllt sich mit echten Schritten
 - **Viren-Kämpfe** alle 2.000 Schritte (Push-Notification)
-- **Battle Chips** – Ordner verwalten, Drops sammeln, wegwerfen
+- **Battle Chips** – Ordner verwalten, Drops sammeln, tauschen
 - **Slash-Geste** – Telefon stoßen um Chip einzusetzen (Beschleunigungssensor)
 - **BLE Radar** – Navis in der Nähe automatisch finden
 - **P2P Bluetooth** – Kämpfe und Trades ohne Internet
