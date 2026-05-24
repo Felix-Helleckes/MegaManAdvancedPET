@@ -56,19 +56,19 @@ class _HomeScreenState extends State<HomeScreen>
             return _buildBody(context, sp);
           },
         ),
-      ),
-    );
-  }
 
-  Widget _buildBody(BuildContext context, SingleplayerProvider sp) {
-    final navi = sp.navi;
-    final hpFrac = navi.currentHp / navi.maxHp;
-    final loc = AppLocalizations.of(context)!;
+        String? _assetForChip(dynamic chip) {
+          try {
+            final id = chip.id as String;
+            final digitMatch = RegExp(r'\d+').firstMatch(id);
+            if (digitMatch != null) {
+              final padded = int.parse(digitMatch.group(0)!).toString().padLeft(3, '0');
+              return 'assets/images/chips/BattleChip${padded}.png';
+            }
+          } catch (_) {}
+          return null;
+        }
 
-    return Column(
-      children: [
-        _buildTopBar(loc),
-        Expanded(
           child: SingleChildScrollView(
             padding: const EdgeInsets.all(20),
             child: Column(
@@ -531,9 +531,30 @@ class _HomeScreenState extends State<HomeScreen>
       ),
       child: Padding(
         padding: const EdgeInsets.all(6.0),
-        child: Image.asset(chip.imageUrl, fit: BoxFit.contain),
+        child: Builder(builder: (_) {
+          final assetPath = _assetForChip(chip);
+          if (assetPath != null) return Image.asset(assetPath, fit: BoxFit.contain);
+          if (chip.imageUrl != null) {
+            return chip.imageUrl!.startsWith('assets/')
+                ? Image.asset(chip.imageUrl, fit: BoxFit.contain)
+                : Image.network(chip.imageUrl, fit: BoxFit.contain);
+          }
+          return const SizedBox.shrink();
+        }),
       ),
     );
+  }
+
+  String? _assetForChip(dynamic chip) {
+    try {
+      final id = chip.id as String;
+      final m = RegExp(r'^chip_(\d+) $').firstMatch(id);
+      if (m != null) {
+        final padded = int.parse(m.group(1)!).toString().padLeft(3, '0');
+        return 'assets/images/chips/BattleChip${padded}.png';
+      }
+    } catch (_) {}
+    return null;
   }
 
 

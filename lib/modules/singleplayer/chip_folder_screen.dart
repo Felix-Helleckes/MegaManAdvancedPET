@@ -155,7 +155,14 @@ class _ChipFolderScreenState extends State<ChipFolderScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
             children: [
-            if (chip.imageUrl != null)
+            final assetPath = _assetForChip(chip);
+            if (assetPath != null)
+              ClipRRect(
+                borderRadius: BorderRadius.circular(6),
+                child: Image.asset(assetPath, width: 64, height: 64, fit: BoxFit.cover,
+                    errorBuilder: (_, __, ___) => Text(chip.elementEmoji, style: const TextStyle(fontSize: 28))),
+              )
+            else if (chip.imageUrl != null)
               ClipRRect(
                 borderRadius: BorderRadius.circular(6),
                 child: chip.imageUrl!.startsWith('assets/')
@@ -227,7 +234,13 @@ class _ChipFolderScreenState extends State<ChipFolderScreen> {
             Text(chip.elementEmoji,
                 style: const TextStyle(fontSize: 48)),
             const SizedBox(height: 12),
-            if (chip.imageUrl != null)
+            final detailAsset = _assetForChip(chip);
+            if (detailAsset != null)
+              ClipRRect(
+                borderRadius: BorderRadius.circular(8),
+                child: Image.asset(detailAsset, width: 96, height: 96, fit: BoxFit.contain, errorBuilder: (_, __, ___) => const SizedBox.shrink()),
+              )
+            else if (chip.imageUrl != null)
               ClipRRect(
                 borderRadius: BorderRadius.circular(8),
                 child: chip.imageUrl!.startsWith('assets/')
@@ -247,10 +260,10 @@ class _ChipFolderScreenState extends State<ChipFolderScreen> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                _detailStat('DMG', chip.damage > 0 ? '${chip.damage}' : '-'),
-                _detailStat('ELEM', chip.element.name.toUpperCase()),
-                _detailStat('RARITY', chip.rarityLabel),
-                _detailStat('CODE', chip.code),
+                _detailStat('TYPE', chip.typeLabel),
+                _detailStat('CLASS', chip.classLabel),
+                _detailStat('ELEM', chip.elementLabel.toUpperCase()),
+                _detailStat('AT', chip.atValue > 0 ? '${chip.atValue}' : '-'),
               ],
             ),
             const SizedBox(height: 20),
@@ -298,6 +311,18 @@ class _ChipFolderScreenState extends State<ChipFolderScreen> {
                 fontSize: 9, color: PetTheme.textPrimary)),
       ],
     );
+  }
+
+  String? _assetForChip(BattleChip chip) {
+    // Prefer explicit asset URL if provided on the model.
+    if (chip.imageUrl != null && chip.imageUrl!.startsWith('assets/')) return chip.imageUrl;
+    // Extract the first contiguous digit group from the id (e.g. chip_123 -> 123)
+    final digitMatch = RegExp(r'\d+').firstMatch(chip.id);
+    if (digitMatch != null) {
+      final padded = int.parse(digitMatch.group(0)!).toString().padLeft(3, '0');
+      return 'assets/images/chips/BattleChip${padded}.png';
+    }
+    return null;
   }
 
   String _rarityLabel(ChipRarity r) {

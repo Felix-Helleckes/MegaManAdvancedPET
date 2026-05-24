@@ -42,6 +42,37 @@ void main() async {
     }
   }
 
+  // Ensure any downloaded BattleChip images (assets/images/chips/BattleChip###.png)
+  // have a placeholder entry in the chips box so they appear in the app.
+  try {
+    final assetDir = Directory('assets/images/chips');
+    if (await assetDir.exists()) {
+      final files = assetDir.listSync().whereType<File>();
+      for (final f in files) {
+        final m = RegExp(r'BattleChip(\d{3})\.png').firstMatch(f.path.split(Platform.pathSeparator).last);
+        if (m != null) {
+          final id = 'chip_${int.parse(m.group(1)!).toString()}';
+          final exists = chipsBox.values.any((c) => c.id == id);
+          if (!exists) {
+            // add a placeholder BattleChip so the image is represented in-app
+            await chipsBox.add(BattleChip(
+              id: id,
+              name: 'Chip ${m.group(1)}',
+              damage: 0,
+              description: 'Imported from wiki assets',
+              rarityIndex: 0,
+              elementIndex: 0,
+              categoryIndex: 0,
+              code: '?',
+            ));
+          }
+        }
+      }
+    }
+  } catch (_) {
+    // best-effort only; don't block startup on asset scanning
+  }
+
   // Init background step service
   await StepService.initialize();
 

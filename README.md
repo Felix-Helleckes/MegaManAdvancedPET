@@ -1,93 +1,73 @@
 # Project PET: Local NetBattler 📟
 
-A MegaMan Battle Network inspired handheld experience for iOS & Android.
+An open-source, MegaMan Battle Network–inspired handheld experience for iOS & Android. This project recreates the feel of the Advanced PET: step-driven encounters, collectible Battle Chips, and local-only multiplayer via Bluetooth.
 
-## Features
-- **Schrittzähler** → Cyber-Meter füllt sich mit echten Schritten
-- **Viren-Kämpfe** alle 2.000 Schritte (Push-Notification)
-- **Battle Chips** – Ordner verwalten, Drops sammeln, wegwerfen
-- **Slash-Geste** – Telefon stoßen um Chip einzusetzen (Beschleunigungssensor)
-- **BLE Radar** – Navis in der Nähe automatisch finden
-- **P2P Bluetooth** – Kämpfe und Trades ohne Internet
+## Current status (short)
+- Assets: many BattleChip images have been downloaded and are stored under `assets/images/chips/` (deduplicated).
+- `BattleChip.fullCatalog`: generated placeholder entries for `chip_001`..`chip_320` so every numeric asset can be represented in-app.
+- Verification tool: `tools/check_chip_assets.py` produces `reports/missing_chip_images.txt` and `reports/unreferenced_chip_images.txt` to help ensure completeness.
+- UI: chip detail shows TYPE / CLASS / ELEM / AT in English and prefers local assets when available.
+- Combat logic: basic resolver implemented; support/defense/heal behaviors exist but need further tuning to match wiki semantics.
 
-## Setup
+## Quick start
 
-### Voraussetzungen
-- [Flutter SDK](https://docs.flutter.dev/get-started/install) ≥ 3.0
-- Xcode (iOS) oder Android Studio (Android)
-- Ein echtes Gerät (Sensoren + BT funktionieren nicht im Simulator)
+### Requirements
+- Flutter SDK ≥ 3.0
+- Xcode (macOS / iOS) or Android Studio (Android)
+- A physical device for testing sensors and Bluetooth (emulators do not fully support these features)
 
-### Installation
+### Install & run
 
 ```bash
-# Abhängigkeiten installieren
+# install deps
 flutter pub get
 
-# App starten (Gerät anschließen)
+# run on connected device
 flutter run
 ```
 
-### Android Permissions
-In `android/app/src/main/AndroidManifest.xml` müssen folgende Permissions vorhanden sein:
+### Developer utilities
+- Asset checker: run the asset verification script to generate reports:
 
-```xml
-<uses-permission android:name="android.permission.BLUETOOTH_SCAN" />
-<uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
-<uses-permission android:name="android.permission.BLUETOOTH_ADVERTISE" />
-<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-<uses-permission android:name="android.permission.ACTIVITY_RECOGNITION" />
-<uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+```bash
+python tools/check_chip_assets.py
 ```
 
-### iOS Permissions
-In `ios/Runner/Info.plist`:
-```xml
-<key>NSMotionUsageDescription</key>
-<string>Wird für den Schrittzähler benötigt.</string>
-<key>NSBluetoothAlwaysUsageDescription</key>
-<string>Wird für Multiplayer-Kämpfe benötigt.</string>
-<key>NSBluetoothPeripheralUsageDescription</key>
-<string>Wird für Chip-Trades benötigt.</string>
-```
+Reports are written to `reports/missing_chip_images.txt` and `reports/unreferenced_chip_images.txt`.
 
-## Projektstruktur
+## Important permissions
+
+Android (`android/app/src/main/AndroidManifest.xml`): include Bluetooth and motion/location permissions as needed for your target SDK.
+
+iOS (`ios/Runner/Info.plist`): add `NSMotionUsageDescription`, `NSBluetoothAlwaysUsageDescription`, and related keys with appropriate user-facing strings.
+
+## Project layout (high level)
 
 ```
 lib/
-├── main.dart                         # App-Einstiegspunkt
-├── core/
-│   ├── app_router.dart               # Named routes
-│   └── models/
-│       ├── navi.dart                 # NetNavi Datenmodell (Hive)
-│       └── battle_chip.dart          # BattleChip Datenmodell (Hive)
-├── modules/
-│   ├── singleplayer/
-│   │   ├── home_screen.dart          # Haupt-PET-Anzeige
-│   │   ├── chip_folder_screen.dart   # Chip-Inventar
-│   │   ├── step_service.dart         # Schrittzähler + Push
-│   │   └── singleplayer_provider.dart
-│   ├── combat/
-│   │   ├── combat_screen.dart        # Kampf-UI
-│   │   └── combat_provider.dart      # Kampflogik + Slash-Geste
-│   └── bluetooth/
-│       ├── ble_screen.dart           # Radar-UI
-│       └── ble_provider.dart         # BLE Scan + P2P
-└── shared/
-    └── theme/
-        └── pet_theme.dart            # LCD Pixel-Art Theme
+├─ main.dart
+├─ core/
+│  ├─ models/
+│  │  ├─ battle_chip.dart   # Hive model; contains generated `fullCatalog`
+│  │  └─ navi.dart
+├─ modules/
+│  ├─ singleplayer/         # home, folder, step service, provider
+│  ├─ combat/               # combat UI + resolver
+│  └─ bluetooth/            # BLE scan + P2P
+tools/
+├─ check_chip_assets.py     # asset verification script
+assets/
+└─ images/chips/            # downloaded BattleChip images
 ```
 
-## Nächste Schritte (Roadmap)
+## Roadmap / next work
+- Finalize and tune combat rules to match wiki semantics (attack/support/defense/heal).
+- Enrich `fullCatalog` with real metadata (names, damage, category) parsed from the wiki.
+- Add unit tests for combat resolver and asset-checking automation.
+- Implement robust BLE PvP sync and trade flows.
 
-- [ ] PvP-Kampf via Bluetooth (Echtzeit-Synchronisation)
-- [ ] Chip-Tauschbörse via BLE
-- [ ] Pixel-Art Sprites für Navis und Viren
-- [ ] Sound-Effekte (8-Bit)
-- [ ] Navi-Namenseingabe beim ersten Start
-- [ ] Chip-Code-Kombo-System (A+A+A = Bonus)
+## License
+Free / Open Source — feel free to fork and improve.
 
-## Lizenz
-Free / Open Source – mach was draus! 🚀
-
-## Asset Attribution
+## Asset attribution
 See [ASSET_ATTRIBUTION.md](ASSET_ATTRIBUTION.md) for licensing and attribution details for images sourced from Miraheze (CC BY-SA 4.0).
