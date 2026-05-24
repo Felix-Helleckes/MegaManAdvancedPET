@@ -128,7 +128,7 @@ class _HomeScreenState extends State<HomeScreen>
         alignment: Alignment.center,
         children: [
           // PET housing frame behind the internal UI
-          Positioned.fill(
+          const Positioned.fill(
             child: Center(
               child: AdvancedPetHousing(width: 380, height: 520),
             ),

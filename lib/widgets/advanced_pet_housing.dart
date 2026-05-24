@@ -4,10 +4,10 @@ import 'package:flutter/material.dart';
 /// Use `AdvancedPetHousing(width: ..., height: ...)` to render the device frame.
 class AdvancedPetHousing extends StatefulWidget {
   const AdvancedPetHousing({
-    Key? key,
+    super.key,
     this.width,
     this.height,
-  }) : super(key: key);
+  });
 
   final double? width;
   final double? height;
