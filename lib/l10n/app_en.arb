@@ -1,0 +1,110 @@
+{
+    "appTitle": "Project PET",
+    "homeCyberMeter": "CYBER METER",
+    "homeSteps": "{count} steps",
+    "@homeSteps": {
+        "placeholders": {
+            "count": {
+                "type": "int"
+            }
+        }
+    },
+    "homeStepsToEncounter": "{count} steps to next encounter",
+    "@homeStepsToEncounter": {
+        "placeholders": {
+            "count": {
+                "type": "int"
+            }
+        }
+    },
+    "homeZenny": "ZENNY",
+    "homeWins": "WINS",
+    "homeLosses": "LOSSES",
+    "homeBattleVirus": "BATTLE VIRUS",
+    "homeJackIn": "JACK IN  [ BLE ]",
+    "homeDebug": "DEBUG",
+    "navHome": "HOME",
+    "navChips": "CHIPS",
+    "navBle": "BLE",
+    "virusAlertTitle": "⚠️ VIRUS ALERT",
+    "virusAlertMessage": "A virus appeared!\nReady to battle?",
+    "virusAlertFlee": "FLEE",
+    "virusAlertBattle": "BATTLE!",
+    "onboardingTitle": "SELECT YOUR NETNAVI",
+    "onboardingSubtitle": "Choose your partner for the cyber world. This choice is permanent.",
+    "onboardingConfirm": "CONFIRM {name}?",
+    "@onboardingConfirm": {
+        "placeholders": {
+            "name": {
+                "type": "String"
+            }
+        }
+    },
+    "onboardingYes": "YES",
+    "onboardingNo": "NO",
+    "combatVirusEncounter": "VIRUS ENCOUNTER",
+    "combatPvP": "PVP BATTLE",
+    "combatHp": "HP",
+    "combatStatus": "STATUS: {status}",
+    "@combatStatus": {
+        "placeholders": {
+            "status": {
+                "type": "String"
+            }
+        }
+    },
+    "combatFlee": "FLEE",
+    "combatSendChip": "SEND CHIP",
+    "combatSlash": ">> SLASH! <<",
+    "combatWaiting": "WAITING FOR OPPONENT...",
+    "combatVictory": "VICTORY!",
+    "combatDefeat": "DEFEAT...",
+    "combatReturn": "RETURN",
+    "combatGotData": "Got {zenny}z and {chip}!",
+    "@combatGotData": {
+        "placeholders": {
+            "zenny": {
+                "type": "int"
+            },
+            "chip": {
+                "type": "String"
+            }
+        }
+    },
+    "combatSelectChip": "SELECT CHIP",
+    "combatShake": "SHAKE PHONE OR",
+    "combatAwesome": "AWESOME!",
+    "combatRetreat": "RETREAT",
+    "bleTitle": "BLE RADAR",
+    "bleScan": "SCAN",
+    "bleStatus": "Status: {status}",
+    "@bleStatus": {
+        "placeholders": {
+            "status": {
+                "type": "String"
+            }
+        }
+    },
+    "bleNavisFound": "Found Navis:",
+    "bleConnect": "Connect",
+    "bleRadarRing": "JACK IN",
+    "bleScanning": "SCANNING...",
+    "bleScanForNavis": "SCAN FOR NAVIS",
+    "bleNavisDetected": "NAVIS DETECTED",
+    "bleDisc": "DISC.",
+    "chipFolderTitle": "CHIP FOLDER",
+    "chipFolderEmpty": "Your folder is empty.",
+    "chipDmg": "DMG: {damage}",
+    "@chipDmg": {
+        "placeholders": {
+            "damage": {
+                "type": "int"
+            }
+        }
+    },
+    "chipFolderAll": "ALL",
+    "chipFolderRarity": "RARITY: ",
+    "chipFolderNoChips": "NO CHIPS",
+    "chipFolderDiscard": "DISCARD",
+    "chipFolderKeep": "KEEP"
+}
