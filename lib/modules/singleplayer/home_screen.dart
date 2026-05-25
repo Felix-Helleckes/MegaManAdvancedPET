@@ -46,7 +46,7 @@ class _HomeScreenState extends State<HomeScreen>
     return Scaffold(
       backgroundColor: PetTheme.background,
       body: SafeArea(
-        child: Consumer<SingleplayerProvider>(
+            child: Consumer<SingleplayerProvider>(
           builder: (context, sp, _) {
             if (sp.encounterPending) {
               WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -61,7 +61,7 @@ class _HomeScreenState extends State<HomeScreen>
               child: Column(
                 children: [
                   _buildTopBar(loc),
-                  _naviDisplay(navi, hpFrac),
+                  _naviDisplay(navi, hpFrac, sp),
                   const SizedBox(height: 20),
                   _stepMeter(sp),
                   const SizedBox(height: 20),
@@ -110,7 +110,7 @@ class _HomeScreenState extends State<HomeScreen>
     );
   }
 
-  Widget _naviDisplay(navi, double hpFrac) {
+  Widget _naviDisplay(navi, double hpFrac, SingleplayerProvider sp) {
     // Device-like PET frame (red) with screen in the center showing the Navi
     return Center(
       child: Stack(
@@ -245,6 +245,9 @@ class _HomeScreenState extends State<HomeScreen>
                 ),
               ),
             ),
+            const SizedBox(height: 12),
+            // Tamagotchi panel: hunger / happiness and actions
+            _petPanel(sp),
             const SizedBox(height: 14),
             // Controls: D-Pad (left) and A/B buttons (right)
             Row(
@@ -383,6 +386,73 @@ class _HomeScreenState extends State<HomeScreen>
         const SizedBox(width: 10),
         _statBox(loc.homeLosses, '${navi.losses}', PetTheme.danger),
       ],
+    );
+  }
+
+  Widget _petPanel(SingleplayerProvider sp) {
+    return Container(
+      padding: const EdgeInsets.all(10),
+      width: 280,
+      decoration: BoxDecoration(
+        color: PetTheme.surface,
+        borderRadius: BorderRadius.circular(8),
+        border: Border.all(color: PetTheme.border),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text('Pet', style: GoogleFonts.pressStart2p(fontSize: 8, color: PetTheme.textSecondary)),
+          const SizedBox(height: 8),
+          Row(
+            children: [
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text('Hunger', style: GoogleFonts.pressStart2p(fontSize: 7, color: PetTheme.textSecondary)),
+                    const SizedBox(height: 6),
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(4),
+                      child: LinearProgressIndicator(
+                        minHeight: 10,
+                        value: (100 - sp.petHunger) / 100.0,
+                        backgroundColor: Colors.grey.shade900,
+                        valueColor: const AlwaysStoppedAnimation(PetTheme.warning),
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    Text('Happiness', style: GoogleFonts.pressStart2p(fontSize: 7, color: PetTheme.textSecondary)),
+                    const SizedBox(height: 6),
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(4),
+                      child: LinearProgressIndicator(
+                        minHeight: 10,
+                        value: sp.petHappiness / 100.0,
+                        backgroundColor: Colors.grey.shade900,
+                        valueColor: const AlwaysStoppedAnimation(PetTheme.accent),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(width: 12),
+              Column(
+                children: [
+                  ElevatedButton(
+                    onPressed: () => sp.feedPet(20),
+                    child: Text('Feed', style: GoogleFonts.pressStart2p(fontSize: 8)),
+                  ),
+                  const SizedBox(height: 8),
+                  ElevatedButton(
+                    onPressed: () => sp.playWithPet(15),
+                    child: Text('Play', style: GoogleFonts.pressStart2p(fontSize: 8)),
+                  ),
+                ],
+              )
+            ],
+          ),
+        ],
+      ),
     );
   }
 
@@ -578,6 +648,7 @@ class _HomeScreenState extends State<HomeScreen>
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
+          _navItem(context, Icons.videogame_asset, 'PET', AppRouter.pet),
           _navItem(context, Icons.home, loc.navHome, AppRouter.home),
           _navItem(context, Icons.style, loc.navChips, AppRouter.chipFolder),
           _navItem(context, Icons.bluetooth, loc.navBle, AppRouter.bluetooth),

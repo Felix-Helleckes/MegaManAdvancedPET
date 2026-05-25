@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -74,8 +75,14 @@ void main() async {
     // best-effort only; don't block startup on asset scanning
   }
 
-  // Init background step service
-  await StepService.initialize();
+  // Init background step service (guard against plugin errors so emulator doesn't crash)
+  try {
+    await StepService.initialize();
+  } catch (e, st) {
+    // If StepService fails, log and continue; StepService will fallback to simulation where possible
+    debugPrint('[Main] StepService.initialize failed: $e');
+    debugPrint('$st');
+  }
 
   bool hasNavi = Hive.box<Navi>('navi').isNotEmpty;
 

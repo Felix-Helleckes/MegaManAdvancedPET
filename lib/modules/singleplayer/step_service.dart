@@ -58,25 +58,65 @@ class StepService {
 
     // Try to start real pedometer listening; if it fails, fall back to simulation.
     try {
-      _startListening();
+      await _startListening();
     } catch (e) {
       debugPrint('[StepService] Pedometer init failed, starting simulation: $e');
       _startSimulation();
     }
   }
 
-  static void _startListening() {
-    _stepSub = Pedometer.stepCountStream.listen(
-      _onStep,
-      onError: (e) => debugPrint('[StepService] stepCountStream error: $e'),
-      cancelOnError: false,
-    );
+  static Future<void> _startListening() async {
+    // Quick probe: try to get a single step event (short timeout). If the
+    // plugin throws or no events arrive, fall back to simulation to avoid
+    // unhandled exceptions on emulators.
+    try {
+      await Pedometer.stepCountStream.first.timeout(const Duration(seconds: 2));
+    } catch (e) {
+      debugPrint('[StepService] no step events available or probe failed: $e');
+      _startSimulation();
+      return;
+    }
 
-    _statusSub = Pedometer.pedestrianStatusStream.listen(
-      (status) => debugPrint('[StepService] status: ${status.status}'),
-      onError: (e) => debugPrint('[StepService] status error: $e'),
-      cancelOnError: false,
-    );
+    // If probe succeeded, safely subscribe with robust error handling.
+    try {
+      _stepSub = Pedometer.stepCountStream.listen(
+        _onStep,
+        onError: (e) {
+          debugPrint('[StepService] stepCountStream error: $e');
+          try {
+            _stepSub?.cancel();
+            _statusSub?.cancel();
+          } catch (_) {}
+          _startSimulation();
+        },
+        cancelOnError: false,
+      );
+    } catch (e) {
+      debugPrint('[StepService] stepCountStream listen failed: $e');
+      _startSimulation();
+      return;
+    }
+
+    try {
+      _statusSub = Pedometer.pedestrianStatusStream.listen(
+        (status) => debugPrint('[StepService] status: ${status.status}'),
+        onError: (e) {
+          debugPrint('[StepService] status error: $e');
+          try {
+            _stepSub?.cancel();
+            _statusSub?.cancel();
+          } catch (_) {}
+          _startSimulation();
+        },
+        cancelOnError: false,
+      );
+    } catch (e) {
+      debugPrint('[StepService] pedestrianStatusStream listen failed: $e');
+      try {
+        _stepSub?.cancel();
+      } catch (_) {}
+      _startSimulation();
+    }
   }
 
   // Simple simulation for emulator/testing: increments steps every second.

@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:hive/hive.dart';
 import '../../core/models/navi.dart';
@@ -11,6 +12,13 @@ class SingleplayerProvider extends ChangeNotifier {
   List<BattleChip> _chips = [];
   bool _encounterPending = false;
   int _steps = 0;
+  // Tamagotchi-like pet state (0..100)
+  int _petHunger = 0; // 0 = full, 100 = starving
+  int _petHappiness = 100; // 0 = sad, 100 = happy
+  Timer? _petTimer;
+
+  int get petHunger => _petHunger;
+  int get petHappiness => _petHappiness;
 
   Navi get navi => _navi;
   List<BattleChip> get chips => List.unmodifiable(_chips);
@@ -39,6 +47,11 @@ class SingleplayerProvider extends ChangeNotifier {
     _chips = chipBox.values.toList();
     _steps = StepService.currentSteps;
 
+    // Load pet state from settings
+    final settings = Hive.box('settings');
+    _petHunger = settings.get('pet_hunger', defaultValue: 0) as int;
+    _petHappiness = settings.get('pet_happiness', defaultValue: 100) as int;
+
     // Listen for new steps
     StepService.stepStream.listen((steps) {
       _steps = steps;
@@ -52,6 +65,12 @@ class SingleplayerProvider extends ChangeNotifier {
     };
 
     notifyListeners();
+
+    // Start decay timer (every 30 seconds for dev; can be increased in production)
+    _petTimer?.cancel();
+    _petTimer = Timer.periodic(const Duration(seconds: 30), (_) {
+      _decayPet();
+    });
   }
 
   void clearEncounter() {
@@ -109,5 +128,41 @@ class SingleplayerProvider extends ChangeNotifier {
   /// Simulates steps (debug/demo button in UI)
   void simulateSteps(int count) {
     StepService.addSimulatedSteps(count);
+  }
+
+  void _decayPet() {
+    // Increase hunger slowly, decrease happiness if very hungry
+    _petHunger = (_petHunger + 1).clamp(0, 100);
+    if (_petHunger > 60) _petHappiness = (_petHappiness - 2).clamp(0, 100);
+    if (_petHunger > 85) _petHappiness = (_petHappiness - 3).clamp(0, 100);
+    _savePetState();
+    notifyListeners();
+  }
+
+  void feedPet(int amount) {
+    _petHunger = (_petHunger - amount).clamp(0, 100);
+    _petHappiness = (_petHappiness + (amount ~/ 2)).clamp(0, 100);
+    _savePetState();
+    notifyListeners();
+  }
+
+  void playWithPet(int fun) {
+    _petHappiness = (_petHappiness + fun).clamp(0, 100);
+    // playing makes pet a bit hungrier
+    _petHunger = (_petHunger + (fun ~/ 3)).clamp(0, 100);
+    _savePetState();
+    notifyListeners();
+  }
+
+  void _savePetState() {
+    final settings = Hive.box('settings');
+    settings.put('pet_hunger', _petHunger);
+    settings.put('pet_happiness', _petHappiness);
+  }
+
+  @override
+  void dispose() {
+    _petTimer?.cancel();
+    super.dispose();
   }
 }

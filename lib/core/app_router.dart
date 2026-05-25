@@ -6,6 +6,7 @@ import '../modules/bluetooth/ble_screen.dart';
 import '../modules/bluetooth/ble_provider.dart';
 import '../modules/singleplayer/chip_folder_screen.dart';
 import '../modules/onboarding/onboarding_screen.dart';
+import '../ui/pet_shell.dart';
 
 class AppRouter {
   static const String home       = '/';
@@ -13,6 +14,7 @@ class AppRouter {
   static const String bluetooth  = '/bluetooth';
   static const String chipFolder = '/chips';
   static const String onboarding = '/onboarding';
+  static const String pet        = '/pet';
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
@@ -32,6 +34,8 @@ class AppRouter {
         );
       case chipFolder:
         return _slide(const ChipFolderScreen());
+      case pet:
+        return _slide(const PetShell());
       default:
         return _slide(const HomeScreen());
     }
