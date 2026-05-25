@@ -53,41 +53,30 @@ class _HomeScreenState extends State<HomeScreen>
                 _showEncounterDialog(context, sp);
               });
             }
-            return _buildBody(context, sp);
+            final loc = AppLocalizations.of(context)!;
+            final navi = sp.navi;
+            final hpFrac = (navi.maxHp > 0) ? (navi.currentHp / navi.maxHp) : 0.0;
+            return SingleChildScrollView(
+              padding: const EdgeInsets.all(20),
+              child: Column(
+                children: [
+                  _buildTopBar(loc),
+                  _naviDisplay(navi, hpFrac),
+                  const SizedBox(height: 20),
+                  _stepMeter(sp),
+                  const SizedBox(height: 20),
+                  _statsRow(navi),
+                  const SizedBox(height: 20),
+                  _actionButtons(context),
+                  const SizedBox(height: 20),
+                  _debugPanel(sp),
+                ],
+              ),
+            );
           },
         ),
-
-        String? _assetForChip(dynamic chip) {
-          try {
-            final id = chip.id as String;
-            final digitMatch = RegExp(r'\d+').firstMatch(id);
-            if (digitMatch != null) {
-              final padded = int.parse(digitMatch.group(0)!).toString().padLeft(3, '0');
-              return 'assets/images/chips/BattleChip$padded.png';
-            }
-          } catch (_) {}
-          return null;
-        }
-
-          child: SingleChildScrollView(
-            padding: const EdgeInsets.all(20),
-            child: Column(
-              children: [
-                _naviDisplay(navi, hpFrac),
-                const SizedBox(height: 20),
-                _stepMeter(sp),
-                const SizedBox(height: 20),
-                _statsRow(navi),
-                const SizedBox(height: 20),
-                _actionButtons(context),
-                const SizedBox(height: 20),
-                _debugPanel(sp),
-              ],
-            ),
-          ),
-        ),
-        _bottomNav(context),
-      ],
+      ),
+      bottomNavigationBar: _bottomNav(context),
     );
   }
 
@@ -663,7 +652,6 @@ class _HomeScreenState extends State<HomeScreen>
 class _ScanlinePainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
-    final paint = Paint()..color = const Color(0xFF1B5E20).withOpacity(0.08);
     // base tint
     canvas.drawRect(Offset.zero & size, Paint()..color = const Color(0xFF0F1720));
     // faint grid

@@ -144,6 +144,32 @@ class _ChipFolderScreenState extends State<ChipFolderScreen> {
 
   Widget _chipCard(BuildContext ctx, BattleChip chip, SingleplayerProvider sp,
       int index, AppLocalizations loc) {
+    final assetPath = _assetForChip(chip);
+    Widget imageWidget;
+    if (assetPath != null) {
+      imageWidget = ClipRRect(
+        borderRadius: BorderRadius.circular(6),
+        child: Image.asset(assetPath, width: 64, height: 64, fit: BoxFit.cover,
+            errorBuilder: (_, __, ___) => Text(chip.elementEmoji, style: const TextStyle(fontSize: 28))),
+      );
+    } else if (chip.imageUrl != null) {
+      imageWidget = ClipRRect(
+        borderRadius: BorderRadius.circular(6),
+        child: chip.imageUrl!.startsWith('assets/')
+            ? Image.asset(chip.imageUrl!, width: 64, height: 64, fit: BoxFit.cover,
+                errorBuilder: (_, __, ___) => Text(chip.elementEmoji, style: const TextStyle(fontSize: 28)))
+            : Image.network(chip.imageUrl!, width: 64, height: 64, fit: BoxFit.cover,
+                errorBuilder: (_, __, ___) => Text(chip.elementEmoji, style: const TextStyle(fontSize: 28))),
+      );
+    } else {
+      imageWidget = Column(
+        children: [
+          Text(chip.elementEmoji, style: const TextStyle(fontSize: 28)),
+          const SizedBox(height: 6),
+        ],
+      );
+    }
+
     return GestureDetector(
       onLongPress: () => _showChipDetail(ctx, chip, sp, index, loc),
       child: Container(
@@ -154,33 +180,12 @@ class _ChipFolderScreenState extends State<ChipFolderScreen> {
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-            final assetPath = _assetForChip(chip);
-            if (assetPath != null)
-              ClipRRect(
-                borderRadius: BorderRadius.circular(6),
-                child: Image.asset(assetPath, width: 64, height: 64, fit: BoxFit.cover,
-                    errorBuilder: (_, __, ___) => Text(chip.elementEmoji, style: const TextStyle(fontSize: 28))),
-              )
-            else if (chip.imageUrl != null)
-              ClipRRect(
-                borderRadius: BorderRadius.circular(6),
-                child: chip.imageUrl!.startsWith('assets/')
-                    ? Image.asset(chip.imageUrl!, width: 64, height: 64, fit: BoxFit.cover,
-                        errorBuilder: (_, __, ___) => Text(chip.elementEmoji, style: const TextStyle(fontSize: 28)))
-                    : Image.network(chip.imageUrl!, width: 64, height: 64, fit: BoxFit.cover,
-                        errorBuilder: (_, __, ___) => Text(chip.elementEmoji, style: const TextStyle(fontSize: 28))),
-              )
-            else ...[
-              Text(chip.elementEmoji,
-                  style: const TextStyle(fontSize: 28)),
-              const SizedBox(height: 6),
-            ],
+          children: [
+            imageWidget,
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 6),
               child: Text(chip.name,
-                  style: GoogleFonts.pressStart2p(
-                      fontSize: 6.5, color: chip.rarityColor),
+                  style: GoogleFonts.pressStart2p(fontSize: 6.5, color: chip.rarityColor),
                   textAlign: TextAlign.center,
                   maxLines: 2),
             ),
@@ -194,22 +199,18 @@ class _ChipFolderScreenState extends State<ChipFolderScreen> {
                       : chip.damage < 0
                           ? '+${-chip.damage}HP'
                           : '—',
-                  style: GoogleFonts.pressStart2p(
-                      fontSize: 9, color: PetTheme.textPrimary),
+                  style: GoogleFonts.pressStart2p(fontSize: 9, color: PetTheme.textPrimary),
                 ),
               ],
             ),
             const SizedBox(height: 4),
             Container(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+              padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
               decoration: BoxDecoration(
                 color: chip.rarityColor.withOpacity(0.15),
                 borderRadius: BorderRadius.circular(3),
               ),
-              child: Text(chip.code,
-                  style: GoogleFonts.pressStart2p(
-                      fontSize: 7, color: chip.rarityColor)),
+              child: Text(chip.code, style: GoogleFonts.pressStart2p(fontSize: 7, color: chip.rarityColor)),
             ),
           ],
         ),
@@ -231,22 +232,25 @@ class _ChipFolderScreenState extends State<ChipFolderScreen> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Text(chip.elementEmoji,
-                style: const TextStyle(fontSize: 48)),
+            Text(chip.elementEmoji, style: const TextStyle(fontSize: 48)),
             const SizedBox(height: 12),
-            final detailAsset = _assetForChip(chip);
-            if (detailAsset != null)
-              ClipRRect(
-                borderRadius: BorderRadius.circular(8),
-                child: Image.asset(detailAsset, width: 96, height: 96, fit: BoxFit.contain, errorBuilder: (_, __, ___) => const SizedBox.shrink()),
-              )
-            else if (chip.imageUrl != null)
-              ClipRRect(
-                borderRadius: BorderRadius.circular(8),
-                child: chip.imageUrl!.startsWith('assets/')
-                    ? Image.asset(chip.imageUrl!, width: 96, height: 96, fit: BoxFit.contain, errorBuilder: (_, __, ___) => const SizedBox.shrink())
-                    : Image.network(chip.imageUrl!, width: 96, height: 96, fit: BoxFit.contain, errorBuilder: (_, __, ___) => const SizedBox.shrink()),
-              ),
+            Builder(builder: (_) {
+              final detailAsset = _assetForChip(chip);
+              if (detailAsset != null) {
+                return ClipRRect(
+                  borderRadius: BorderRadius.circular(8),
+                  child: Image.asset(detailAsset, width: 96, height: 96, fit: BoxFit.contain, errorBuilder: (_, __, ___) => const SizedBox.shrink()),
+                );
+              } else if (chip.imageUrl != null) {
+                return ClipRRect(
+                  borderRadius: BorderRadius.circular(8),
+                  child: chip.imageUrl!.startsWith('assets/')
+                      ? Image.asset(chip.imageUrl!, width: 96, height: 96, fit: BoxFit.contain, errorBuilder: (_, __, ___) => const SizedBox.shrink())
+                      : Image.network(chip.imageUrl!, width: 96, height: 96, fit: BoxFit.contain, errorBuilder: (_, __, ___) => const SizedBox.shrink()),
+                );
+              }
+              return const SizedBox.shrink();
+            }),
             Text(chip.name,
                 style: GoogleFonts.pressStart2p(
                     fontSize: 14, color: chip.rarityColor)),

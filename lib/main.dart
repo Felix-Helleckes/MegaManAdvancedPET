@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:path_provider/path_provider.dart';
-import 'dart:io' show Directory;
+import 'dart:io' show Directory, File, Platform;
 import 'package:provider/provider.dart';
 
 import 'package:project_pet/l10n/app_localizations.dart';
@@ -16,6 +16,7 @@ import 'modules/combat/combat_provider.dart';
 // Bluetooth provider disabled at startup to avoid emulator/system issues
 // import 'modules/bluetooth/ble_provider.dart';
 import 'shared/theme/pet_theme.dart';
+import 'ui/pet_bottom_widget.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -78,7 +79,24 @@ void main() async {
 
   bool hasNavi = Hive.box<Navi>('navi').isNotEmpty;
 
-  runApp(ProjectPetApp(hasNavi: hasNavi));
+  // Toggle this to `true` to preview the PET bottom UI locally without
+  // running the full app navigation. This is intentionally a local-only
+  // debug switch for quick visual testing.
+  final bool previewPetBottom = DateTime.now().isAfter(DateTime(2000));
+
+  if (previewPetBottom) {
+    runApp(const MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: Scaffold(
+        backgroundColor: Colors.transparent,
+        body: SafeArea(
+          child: Center(child: PetBottomWidget()),
+        ),
+      ),
+    ));
+  } else {
+    runApp(ProjectPetApp(hasNavi: hasNavi));
+  }
 }
 
 class ProjectPetApp extends StatelessWidget {
