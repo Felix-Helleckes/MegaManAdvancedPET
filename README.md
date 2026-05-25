@@ -1,20 +1,21 @@
 # Project PET: Local NetBattler 📟
 
-An open-source, MegaMan Battle Network–inspired handheld experience for iOS & Android. This project recreates the feel of the Advanced PET: step-driven encounters, collectible Battle Chips, and local-only multiplayer via Bluetooth.
+A MegaMan Battle Network inspired handheld experience for iOS & Android.
 
-## Current status (short)
-- Assets: many BattleChip images have been downloaded and are stored under `assets/images/chips/` (deduplicated).
-- `BattleChip.fullCatalog`: generated placeholder entries for `chip_001`..`chip_320` so every numeric asset can be represented in-app.
-- Verification tool: `tools/check_chip_assets.py` produces `reports/missing_chip_images.txt` and `reports/unreferenced_chip_images.txt` to help ensure completeness.
-- UI: chip detail shows TYPE / CLASS / ELEM / AT in English and prefers local assets when available.
-- Combat logic: basic resolver implemented; support/defense/heal behaviors exist but need further tuning to match wiki semantics.
+## Features
+- **Schrittzähler** → Cyber-Meter füllt sich mit echten Schritten
+- **Viren-Kämpfe** alle 2.000 Schritte (Push-Notification)
+- **Battle Chips** – Ordner verwalten, Drops sammeln, tauschen
+- **Slash-Geste** – Telefon stoßen um Chip einzusetzen (Beschleunigungssensor)
+- **BLE Radar** – Navis in der Nähe automatisch finden
+- **P2P Bluetooth** – Kämpfe und Trades ohne Internet
 
-## Quick start
+## Setup
 
-### Requirements
-- Flutter SDK ≥ 3.0
-- Xcode (macOS / iOS) or Android Studio (Android)
-- A physical device for testing sensors and Bluetooth (emulators do not fully support these features)
+### Voraussetzungen
+- [Flutter SDK](https://docs.flutter.dev/get-started/install) ≥ 3.0
+- Xcode (iOS) oder Android Studio (Android)
+- Ein echtes Gerät (Sensoren + BT funktionieren nicht im Simulator)
 
 ### Install & run
 
