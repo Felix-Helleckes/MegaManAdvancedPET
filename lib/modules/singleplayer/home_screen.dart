@@ -63,7 +63,7 @@ class _HomeScreenState extends State<HomeScreen>
             final digitMatch = RegExp(r'\d+').firstMatch(id);
             if (digitMatch != null) {
               final padded = int.parse(digitMatch.group(0)!).toString().padLeft(3, '0');
-              return 'assets/images/chips/BattleChip${padded}.png';
+              return 'assets/images/chips/BattleChip$padded.png';
             }
           } catch (_) {}
           return null;
@@ -551,7 +551,7 @@ class _HomeScreenState extends State<HomeScreen>
       final m = RegExp(r'^chip_(\d+) $').firstMatch(id);
       if (m != null) {
         final padded = int.parse(m.group(1)!).toString().padLeft(3, '0');
-        return 'assets/images/chips/BattleChip${padded}.png';
+        return 'assets/images/chips/BattleChip$padded.png';
       }
     } catch (_) {}
     return null;
