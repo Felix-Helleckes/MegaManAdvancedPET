@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -88,8 +87,8 @@ void main() async {
 
   // Toggle this to `true` to preview the PET bottom UI locally without
   // running the full app navigation. This is intentionally a local-only
-  // debug switch for quick visual testing.
-  final bool previewPetBottom = DateTime.now().isAfter(DateTime(2000));
+  // debug switch for quick visual testing. Set to `false` for normal app.
+  const bool previewPetBottom = false;
 
   if (previewPetBottom) {
     runApp(const MaterialApp(

@@ -131,182 +131,185 @@ class _HomeScreenState extends State<HomeScreen>
           color: Colors.transparent,
           borderRadius: BorderRadius.circular(28),
         ),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            // Top speaker / status bar
-            Container(
-              height: 10,
-              margin: const EdgeInsets.only(bottom: 12),
-              decoration: BoxDecoration(
-                color: Colors.black.withOpacity(0.25),
-                borderRadius: BorderRadius.circular(6),
-              ),
-            ),
-            // Chip slot (top)
-                       DragTarget<int>(
-              onWillAcceptWithDetails: (data) => true,
-              onAcceptWithDetails: (data) {
-                HapticFeedback.mediumImpact();
-                setState(() => _slotFlash = true);
-                Timer(const Duration(milliseconds: 220), () => setState(() => _slotFlash = false));
-                // show brief confirmation
-                ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Slot-In!')));
-              },
-              builder: (context, c, r) => Container(
-                width: 160,
-                height: 26,
-                margin: const EdgeInsets.only(bottom: 10),
+        child: SingleChildScrollView(
+          physics: const ClampingScrollPhysics(),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              // Top speaker / status bar
+              Container(
+                height: 10,
+                margin: const EdgeInsets.only(bottom: 12),
                 decoration: BoxDecoration(
-                  color: _slotFlash ? PetTheme.primary : Colors.black87,
-                  borderRadius: BorderRadius.circular(8),
-                  border: Border.all(color: PetTheme.border),
-                ),
-                child: Center(
-                  child: Text('CHIP SLOT', style: GoogleFonts.pressStart2p(fontSize: 8, color: PetTheme.textSecondary)),
+                  color: Colors.black.withOpacity(0.25),
+                  borderRadius: BorderRadius.circular(6),
                 ),
               ),
-            ),
-            // Screen with scanlines / grid
-            Container(
-              width: 260,
-              height: 180,
-              decoration: BoxDecoration(
-                color: Colors.black,
-                borderRadius: BorderRadius.circular(10),
-                boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.6), blurRadius: 8, offset: const Offset(0,4))],
-                border: Border.all(color: const Color(0xFF2B2B2B), width: 4),
-              ),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(6),
-                child: Stack(
-                  children: [
-                    // retro grid / scanlines painter
-                    Positioned.fill(child: CustomPaint(painter: _ScanlinePainter())),
-                    // Center Navi avatar (modern colored placeholder)
-                    Center(
-                      child: Container(
-                        width: 120,
-                        height: 120,
-                        decoration: BoxDecoration(
-                          gradient: LinearGradient(colors: [PetTheme.accent.withOpacity(0.9), PetTheme.primary.withOpacity(0.95)]),
-                          shape: BoxShape.circle,
-                          boxShadow: [BoxShadow(color: PetTheme.accent.withOpacity(0.4), blurRadius: 20, spreadRadius: 1)],
-                          border: Border.all(color: PetTheme.primary, width: 3),
-                        ),
-                        child: Center(
-                          child: Text(
-                            navi.name.isNotEmpty ? navi.name[0].toUpperCase() : 'N',
-                            style: GoogleFonts.pressStart2p(fontSize: 48, color: PetTheme.textPrimary),
-                          ),
-                        ),
-                      ),
-                    ),
-                    // Top-left HUD: name + level
-                    Positioned(
-                      left: 12,
-                      top: 12,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(navi.name.toUpperCase(), style: GoogleFonts.pressStart2p(fontSize: 10, color: PetTheme.textPrimary)),
-                          const SizedBox(height: 4),
-                          Text('LV.${navi.level}', style: GoogleFonts.pressStart2p(fontSize: 8, color: PetTheme.textSecondary)),
-                        ],
-                      ),
-                    ),
-                    // Bottom HUD: HP bar
-                    Positioned(
-                      left: 12,
-                      right: 12,
-                      bottom: 12,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text('HP', style: GoogleFonts.pressStart2p(fontSize: 8, color: PetTheme.textSecondary)),
-                          const SizedBox(height: 6),
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(4),
-                            child: LinearProgressIndicator(
-                              value: hpFrac.clamp(0.0, 1.0),
-                              minHeight: 12,
-                              backgroundColor: Colors.grey.shade900,
-                              valueColor: AlwaysStoppedAnimation(
-                                hpFrac > 0.5 ? PetTheme.primary : hpFrac > 0.25 ? PetTheme.warning : PetTheme.danger,
-                              ),
-                            ),
-                          ),
-                          const SizedBox(height: 6),
-                          Text('${navi.currentHp}/${navi.maxHp}', style: GoogleFonts.pressStart2p(fontSize: 8, color: PetTheme.textSecondary)),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            const SizedBox(height: 12),
-            // Tamagotchi panel: hunger / happiness and actions
-            _petPanel(sp),
-            const SizedBox(height: 14),
-            // Controls: D-Pad (left) and A/B buttons (right)
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                // D-Pad
-                GestureDetector(
-                  onTap: () { HapticFeedback.selectionClick(); ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('D-Pad press'))); },
-                  child: Container(
-                    width: 90,
-                    height: 90,
-                    decoration: BoxDecoration(
-                      color: PetTheme.surfaceVariant,
-                      borderRadius: BorderRadius.circular(12),
-                      border: Border.all(color: PetTheme.border),
-                    ),
-                    child: const Center(child: Icon(Icons.keyboard_arrow_up, color: PetTheme.textSecondary, size: 28)),
+              // Chip slot (top)
+              DragTarget<int>(
+                onWillAcceptWithDetails: (data) => true,
+                onAcceptWithDetails: (data) {
+                  HapticFeedback.mediumImpact();
+                  setState(() => _slotFlash = true);
+                  Timer(const Duration(milliseconds: 220), () => setState(() => _slotFlash = false));
+                  // show brief confirmation
+                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Slot-In!')));
+                },
+                builder: (context, c, r) => Container(
+                  width: 160,
+                  height: 26,
+                  margin: const EdgeInsets.only(bottom: 10),
+                  decoration: BoxDecoration(
+                    color: _slotFlash ? PetTheme.primary : Colors.black87,
+                    borderRadius: BorderRadius.circular(8),
+                    border: Border.all(color: PetTheme.border),
+                  ),
+                  child: Center(
+                    child: Text('CHIP SLOT', style: GoogleFonts.pressStart2p(fontSize: 8, color: PetTheme.textSecondary)),
                   ),
                 ),
-                const SizedBox(width: 18),
-                // A/B Buttons
-                Column(
-                  children: [
-                    GestureDetector(
-                      onTap: () { HapticFeedback.vibrate(); Navigator.pushNamed(context, AppRouter.combat, arguments: {'isVirus': true}); },
-                      child: Container(
-                        width: 64,
-                        height: 64,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: PetTheme.primary,
-                          boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.4), blurRadius: 6, offset: const Offset(0,4))],
-                          border: Border.all(color: PetTheme.border),
-                        ),
-                        child: Center(child: Text('A', style: GoogleFonts.pressStart2p(fontSize: 18, color: PetTheme.textPrimary))),
-                      ),
-                    ),
-                    const SizedBox(height: 10),
-                    GestureDetector(
-                      onTap: () { HapticFeedback.vibrate(); _openChipFolder(context); },
-                      child: Container(
-                        width: 48,
-                        height: 48,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: PetTheme.accent,
-                          boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.3), blurRadius: 6, offset: const Offset(0,3))],
-                          border: Border.all(color: PetTheme.border),
-                        ),
-                        child: Center(child: Text('B', style: GoogleFonts.pressStart2p(fontSize: 14, color: PetTheme.textPrimary))),
-                      ),
-                    ),
-                  ],
+              ),
+              // Screen with scanlines / grid
+              Container(
+                width: 260,
+                height: 180,
+                decoration: BoxDecoration(
+                  color: Colors.black,
+                  borderRadius: BorderRadius.circular(10),
+                  boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.6), blurRadius: 8, offset: const Offset(0,4))],
+                  border: Border.all(color: const Color(0xFF2B2B2B), width: 4),
                 ),
-              ],
-            ),
-          ],
-        ),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(6),
+                  child: Stack(
+                    children: [
+                      // retro grid / scanlines painter
+                      Positioned.fill(child: CustomPaint(painter: _ScanlinePainter())),
+                      // Center Navi avatar (modern colored placeholder)
+                      Center(
+                        child: Container(
+                          width: 120,
+                          height: 120,
+                          decoration: BoxDecoration(
+                            gradient: LinearGradient(colors: [PetTheme.accent.withOpacity(0.9), PetTheme.primary.withOpacity(0.95)]),
+                            shape: BoxShape.circle,
+                            boxShadow: [BoxShadow(color: PetTheme.accent.withOpacity(0.4), blurRadius: 20, spreadRadius: 1)],
+                            border: Border.all(color: PetTheme.primary, width: 3),
+                          ),
+                          child: Center(
+                            child: Text(
+                              navi.name.isNotEmpty ? navi.name[0].toUpperCase() : 'N',
+                              style: GoogleFonts.pressStart2p(fontSize: 48, color: PetTheme.textPrimary),
+                            ),
+                          ),
+                        ),
+                      ),
+                      // Top-left HUD: name + level
+                      Positioned(
+                        left: 12,
+                        top: 12,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(navi.name.toUpperCase(), style: GoogleFonts.pressStart2p(fontSize: 10, color: PetTheme.textPrimary)),
+                            const SizedBox(height: 4),
+                            Text('LV.${navi.level}', style: GoogleFonts.pressStart2p(fontSize: 8, color: PetTheme.textSecondary)),
+                          ],
+                        ),
+                      ),
+                      // Bottom HUD: HP bar
+                      Positioned(
+                        left: 12,
+                        right: 12,
+                        bottom: 12,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text('HP', style: GoogleFonts.pressStart2p(fontSize: 8, color: PetTheme.textSecondary)),
+                            const SizedBox(height: 6),
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(4),
+                              child: LinearProgressIndicator(
+                                value: hpFrac.clamp(0.0, 1.0),
+                                minHeight: 12,
+                                backgroundColor: Colors.grey.shade900,
+                                valueColor: AlwaysStoppedAnimation(
+                                  hpFrac > 0.5 ? PetTheme.primary : hpFrac > 0.25 ? PetTheme.warning : PetTheme.danger,
+                                ),
+                              ),
+                            ),
+                            const SizedBox(height: 6),
+                            Text('${navi.currentHp}/${navi.maxHp}', style: GoogleFonts.pressStart2p(fontSize: 8, color: PetTheme.textSecondary)),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              const SizedBox(height: 12),
+              // Tamagotchi panel: hunger / happiness and actions
+              _petPanel(sp),
+              const SizedBox(height: 14),
+              // Controls: D-Pad (left) and A/B buttons (right)
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  // D-Pad
+                  GestureDetector(
+                    onTap: () { HapticFeedback.selectionClick(); ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('D-Pad press'))); },
+                    child: Container(
+                      width: 90,
+                      height: 90,
+                      decoration: BoxDecoration(
+                        color: PetTheme.surfaceVariant,
+                        borderRadius: BorderRadius.circular(12),
+                        border: Border.all(color: PetTheme.border),
+                      ),
+                      child: const Center(child: Icon(Icons.keyboard_arrow_up, color: PetTheme.textSecondary, size: 28)),
+                    ),
+                  ),
+                  const SizedBox(width: 18),
+                  // A/B Buttons
+                  Column(
+                    children: [
+                      GestureDetector(
+                        onTap: () { HapticFeedback.vibrate(); Navigator.pushNamed(context, AppRouter.combat, arguments: {'isVirus': true}); },
+                        child: Container(
+                          width: 64,
+                          height: 64,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: PetTheme.primary,
+                            boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.4), blurRadius: 6, offset: const Offset(0,4))],
+                            border: Border.all(color: PetTheme.border),
+                          ),
+                          child: Center(child: Text('A', style: GoogleFonts.pressStart2p(fontSize: 18, color: PetTheme.textPrimary))),
+                        ),
+                      ),
+                      const SizedBox(height: 10),
+                      GestureDetector(
+                        onTap: () { HapticFeedback.vibrate(); _openChipFolder(context); },
+                        child: Container(
+                          width: 48,
+                          height: 48,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: PetTheme.accent,
+                            boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.3), blurRadius: 6, offset: const Offset(0,3))],
+                            border: Border.all(color: PetTheme.border),
+                          ),
+                          child: Center(child: Text('B', style: GoogleFonts.pressStart2p(fontSize: 14, color: PetTheme.textPrimary))),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ],
           ),
+        ),
+      ),
           // overlay frame from UXBook (transparent screen area)
           Positioned.fill(
             child: IgnorePointer(

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-import '../modules/singleplayer/step_service.dart';
+import '../core/app_router.dart';
+import '../modules/combat/combat_provider.dart';
+// removed unused import: step_service
 import '../modules/singleplayer/singleplayer_provider.dart';
 
 class PetShell extends StatefulWidget {
@@ -15,15 +17,14 @@ class _PetShellState extends State<PetShell> {
   int _cursorX = 0;
   int _cursorY = 0;
   bool _slotFlash = false;
-
   @override
   void initState() {
     super.initState();
-    // Example: listen to step updates (hook into StepService)
-    StepService.stepStream.listen((steps) {
-      // optional: update UI showing steps
-      setState(() {});
-    });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 
   void _moveCursor(int dx, int dy) {
@@ -52,26 +53,44 @@ class _PetShellState extends State<PetShell> {
                     onAcceptWithDetails: (d) {
                       HapticFeedback.mediumImpact();
                       setState(() => _slotFlash = true);
-                      Future.delayed(const Duration(milliseconds: 250), () => setState(() => _slotFlash = false));
-                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Slot-In!')));
-                      // Optionally trigger combat or chip activation here
+                      Future.delayed(const Duration(milliseconds: 250), () {
+                        if (!mounted) return;
+                        setState(() => _slotFlash = false);
+                      });
+                      final sp = Provider.of<SingleplayerProvider>(context, listen: false);
+                      final idx = d.data;
+                      if (idx >= 0 && idx < sp.chips.length) {
+                        final chip = sp.chips[idx];
+                        // Start combat immediately and select the chip
+                        try {
+                          final combat = Provider.of<CombatProvider>(context, listen: false);
+                          combat.startCombat(playerNavi: sp.navi, playerChips: sp.chips, isVirus: true);
+                          combat.selectChip(chip);
+                        } catch (_) {}
+                        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Slot-In! Starting battle...')));
+                        Navigator.pushNamed(context, AppRouter.combat, arguments: {'isVirus': true});
+                      }
                     },
-                    builder: (context, a, r) => Container(
-                      width: 160,
-                      height: 34,
-                      margin: const EdgeInsets.only(bottom: 12),
+                    builder: (context, a, r) {
+                      final mq = MediaQuery.of(context).size;
+                      final slotW = (mq.width * 0.45).clamp(120.0, 240.0);
+                      return Container(
+                      width: slotW,
+                      height: (slotW * 0.22).clamp(28.0, 48.0),
+                      margin: EdgeInsets.only(bottom: mq.height * 0.012),
                       decoration: BoxDecoration(
                         color: _slotFlash ? Colors.greenAccent.withOpacity(0.6) : (a.isNotEmpty ? Colors.greenAccent.withOpacity(0.25) : Colors.black87),
                         borderRadius: BorderRadius.circular(8),
                         border: Border.all(color: Colors.white12),
                       ),
                       child: const Center(child: Text('DRAG CHIP HERE', style: TextStyle(color: Colors.white70, fontSize: 12))),
-                    ),
+                    );
+                    },
                   ),
 
                   Container(
-                    width: 300,
-                    height: 300,
+                    width: MediaQuery.of(context).size.width * 0.7,
+                    height: (MediaQuery.of(context).size.width * 0.7).clamp(220.0, 420.0),
                     decoration: BoxDecoration(
                       color: const Color(0xFF0A1A1F),
                       borderRadius: BorderRadius.circular(6),
@@ -85,8 +104,8 @@ class _PetShellState extends State<PetShell> {
                         ),
                         // cursor indicator
                         Positioned(
-                          left: 140 + _cursorX.toDouble() * 6,
-                          top: 140 + _cursorY.toDouble() * 6,
+                          left: (MediaQuery.of(context).size.width * 0.35) + _cursorX.toDouble() * 6,
+                          top: (MediaQuery.of(context).size.width * 0.35) + _cursorY.toDouble() * 6,
                           child: const Icon(Icons.circle, size: 8, color: Colors.greenAccent),
                         ),
                       ],
@@ -204,7 +223,7 @@ class _GridPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()..color = Colors.green.withOpacity(0.06);
-    final spacing = 6.0;
+    const spacing = 6.0;
     for (double x = 0; x < size.width; x += spacing) {
       canvas.drawLine(Offset(x, 0), Offset(x, size.height), paint);
     }

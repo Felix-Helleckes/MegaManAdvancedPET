@@ -16,6 +16,15 @@ class SingleplayerProvider extends ChangeNotifier {
   int _petHunger = 0; // 0 = full, 100 = starving
   int _petHappiness = 100; // 0 = sad, 100 = happy
   Timer? _petTimer;
+  bool _useUxAvatar = false;
+
+  bool get useUxAvatar => _useUxAvatar;
+
+  void setUseUxAvatar(bool v) {
+    _useUxAvatar = v;
+    Hive.box('settings').put('use_ux_avatar', v);
+    notifyListeners();
+  }
 
   int get petHunger => _petHunger;
   int get petHappiness => _petHappiness;
@@ -51,6 +60,7 @@ class SingleplayerProvider extends ChangeNotifier {
     final settings = Hive.box('settings');
     _petHunger = settings.get('pet_hunger', defaultValue: 0) as int;
     _petHappiness = settings.get('pet_happiness', defaultValue: 100) as int;
+    _useUxAvatar = settings.get('use_ux_avatar', defaultValue: false) as bool;
 
     // Listen for new steps
     StepService.stepStream.listen((steps) {

@@ -255,11 +255,16 @@ class _ChipFolderScreenState extends State<ChipFolderScreen> {
                 style: GoogleFonts.pressStart2p(
                     fontSize: 14, color: chip.rarityColor)),
             const SizedBox(height: 8),
-            Text(chip.description,
+            Builder(builder: (_) {
+              final desc = (chip.description.trim().isEmpty || chip.description == 'Placeholder')
+                ? 'No description available. Generate metadata with tools/fetch_chip_metadata.py.'
+                : chip.description;
+              return Text(desc,
                 style: GoogleFonts.pressStart2p(
-                    fontSize: 8, color: PetTheme.textSecondary,
-                    height: 1.6),
-                textAlign: TextAlign.center),
+                  fontSize: 8, color: PetTheme.textSecondary,
+                  height: 1.6),
+                textAlign: TextAlign.center);
+            }),
             const SizedBox(height: 16),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,

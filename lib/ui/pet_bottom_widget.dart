@@ -82,10 +82,10 @@ class PetBottomWidget extends StatelessWidget {
                 child: Container(
                   width: (width == double.infinity ? 320 : width) - 20,
                   height: 84,
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                     color: accentBlue,
-                    borderRadius: const BorderRadius.vertical(top: Radius.circular(200)),
-                    boxShadow: const [
+                    borderRadius: BorderRadius.vertical(top: Radius.circular(200)),
+                    boxShadow: [
                       BoxShadow(color: Colors.black26, blurRadius: 6, offset: Offset(0, -2)),
                     ],
                   ),

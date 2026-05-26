@@ -1,4 +1,5 @@
 import 'package:hive/hive.dart';
+import 'battle_chip_data.dart';
 import 'package:flutter/material.dart';
 import '../../shared/theme/pet_theme.dart';
 part 'battle_chip.g.dart';
@@ -133,6 +134,11 @@ class BattleChip extends HiveObject {
       ];
 
   static List<BattleChip> get fullCatalog {
+    // Prefer generated metadata when available (tools may emit battle_chip_data.dart)
+    try {
+      // `generatedFullCatalog` is produced by tools/generate_chip_data_from_assets.py or fetch script.
+      if (generatedFullCatalog.isNotEmpty) return generatedFullCatalog;
+    } catch (_) {}
     // Fallback: placeholders for 1..320
     return List.generate(320, (i) {
       final id = 'chip_${(i + 1).toString().padLeft(3, '0')}';
