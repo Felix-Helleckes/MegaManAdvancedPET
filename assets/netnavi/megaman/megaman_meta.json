@@ -1,0 +1,207 @@
+{
+  "source": "assets\\images\\NetNavi\\MegaMan.jpg",
+  "spritesheet": "assets/netnavi/megaman/megaman_spritesheet.png",
+  "spritesheet_128": "assets/netnavi/megaman/128/megaman_spritesheet_128.png",
+  "frame_size": [
+    1000,
+    1000
+  ],
+  "frame_size_128": [
+    128,
+    128
+  ],
+  "frames": [
+    {
+      "name": "idle_0.png",
+      "tag": "idle",
+      "path": "assets\\netnavi\\megaman\\idle_0.png",
+      "w": 1000,
+      "h": 1000
+    },
+    {
+      "name": "idle_1.png",
+      "tag": "idle",
+      "path": "assets\\netnavi\\megaman\\idle_1.png",
+      "w": 1000,
+      "h": 1000
+    },
+    {
+      "name": "idle_2.png",
+      "tag": "idle",
+      "path": "assets\\netnavi\\megaman\\idle_2.png",
+      "w": 1000,
+      "h": 1000
+    },
+    {
+      "name": "walk_3.png",
+      "tag": "walk",
+      "path": "assets\\netnavi\\megaman\\walk_3.png",
+      "w": 1000,
+      "h": 1000
+    },
+    {
+      "name": "walk_4.png",
+      "tag": "walk",
+      "path": "assets\\netnavi\\megaman\\walk_4.png",
+      "w": 1000,
+      "h": 1000
+    },
+    {
+      "name": "shoot_5.png",
+      "tag": "shoot",
+      "path": "assets\\netnavi\\megaman\\shoot_5.png",
+      "w": 1000,
+      "h": 1000
+    },
+    {
+      "name": "shoot_6.png",
+      "tag": "shoot",
+      "path": "assets\\netnavi\\megaman\\shoot_6.png",
+      "w": 1000,
+      "h": 1000
+    },
+    {
+      "name": "knockback_7.png",
+      "tag": "knockback",
+      "path": "assets\\netnavi\\megaman\\knockback_7.png",
+      "w": 1000,
+      "h": 1000
+    }
+  ],
+  "frames_128": [
+    {
+      "name": "sm_idle_0.png",
+      "tag": "idle",
+      "path": "assets/netnavi/megaman/128/sm_idle_0.png",
+      "w": 128,
+      "h": 128
+    },
+    {
+      "name": "sm_idle_1.png",
+      "tag": "idle",
+      "path": "assets/netnavi/megaman/128/sm_idle_1.png",
+      "w": 128,
+      "h": 128
+    },
+    {
+      "name": "sm_idle_2.png",
+      "tag": "idle",
+      "path": "assets/netnavi/megaman/128/sm_idle_2.png",
+      "w": 128,
+      "h": 128
+    },
+    {
+      "name": "sm_walk_3.png",
+      "tag": "walk",
+      "path": "assets/netnavi/megaman/128/sm_walk_3.png",
+      "w": 128,
+      "h": 128
+    },
+    {
+      "name": "sm_walk_4.png",
+      "tag": "walk",
+      "path": "assets/netnavi/megaman/128/sm_walk_4.png",
+      "w": 128,
+      "h": 128
+    },
+    {
+      "name": "sm_shoot_5.png",
+      "tag": "shoot",
+      "path": "assets/netnavi/megaman/128/sm_shoot_5.png",
+      "w": 128,
+      "h": 128
+    },
+    {
+      "name": "sm_shoot_6.png",
+      "tag": "shoot",
+      "path": "assets/netnavi/megaman/128/sm_shoot_6.png",
+      "w": 128,
+      "h": 128
+    },
+    {
+      "name": "sm_knockback_7.png",
+      "tag": "knockback",
+      "path": "assets/netnavi/megaman/128/sm_knockback_7.png",
+      "w": 128,
+      "h": 128
+    }
+  ],
+  "animations": {
+    "idle": {
+      "frames": [
+        {
+          "name": "idle_0.png",
+          "tag": "idle",
+          "path": "assets\\netnavi\\megaman\\idle_0.png",
+          "w": 1000,
+          "h": 1000
+        },
+        {
+          "name": "idle_1.png",
+          "tag": "idle",
+          "path": "assets\\netnavi\\megaman\\idle_1.png",
+          "w": 1000,
+          "h": 1000
+        },
+        {
+          "name": "idle_2.png",
+          "tag": "idle",
+          "path": "assets\\netnavi\\megaman\\idle_2.png",
+          "w": 1000,
+          "h": 1000
+        }
+      ],
+      "frame_time": 250
+    },
+    "walk": {
+      "frames": [
+        {
+          "name": "walk_3.png",
+          "tag": "walk",
+          "path": "assets\\netnavi\\megaman\\walk_3.png",
+          "w": 1000,
+          "h": 1000
+        },
+        {
+          "name": "walk_4.png",
+          "tag": "walk",
+          "path": "assets\\netnavi\\megaman\\walk_4.png",
+          "w": 1000,
+          "h": 1000
+        }
+      ],
+      "frame_time": 150
+    },
+    "shoot": {
+      "frames": [
+        {
+          "name": "shoot_5.png",
+          "tag": "shoot",
+          "path": "assets\\netnavi\\megaman\\shoot_5.png",
+          "w": 1000,
+          "h": 1000
+        },
+        {
+          "name": "shoot_6.png",
+          "tag": "shoot",
+          "path": "assets\\netnavi\\megaman\\shoot_6.png",
+          "w": 1000,
+          "h": 1000
+        }
+      ],
+      "frame_time": 120
+    },
+    "knockback": {
+      "frames": [
+        {
+          "name": "knockback_7.png",
+          "tag": "knockback",
+          "path": "assets\\netnavi\\megaman\\knockback_7.png",
+          "w": 1000,
+          "h": 1000
+        }
+      ],
+      "frame_time": 200
+    }
+  }
+}

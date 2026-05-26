@@ -178,12 +178,17 @@ class StepService {
       presentAlert: true,
       presentSound: true,
     );
-    await _notifications.show(
-      0,
-      '⚠️ VIRUS DETECTED',
-      'A virus appeared! Open PET to battle.',
-      const NotificationDetails(android: androidDetails, iOS: iosDetails),
-    );
+    try {
+      await _notifications.show(
+        0,
+        '⚠️ VIRUS DETECTED',
+        'A virus appeared! Open PET to battle.',
+        const NotificationDetails(android: androidDetails, iOS: iosDetails),
+      );
+    } catch (e, st) {
+      debugPrint('[StepService] show notification failed: $e');
+      debugPrint(st.toString());
+    }
   }
 
   /// Add steps manually (for testing / shaking gesture)

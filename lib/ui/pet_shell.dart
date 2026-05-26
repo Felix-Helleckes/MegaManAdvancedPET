@@ -5,6 +5,7 @@ import '../core/app_router.dart';
 import '../modules/combat/combat_provider.dart';
 // removed unused import: step_service
 import '../modules/singleplayer/singleplayer_provider.dart';
+import 'netnavi_sprite.dart';
 
 class PetShell extends StatefulWidget {
   const PetShell({super.key});
@@ -97,12 +98,9 @@ class _PetShellState extends State<PetShell> {
                     ),
                     child: Stack(
                       children: [
-                        // Retro grid background
-                        CustomPaint(
-                          size: const Size(double.infinity, double.infinity),
-                          painter: _GridPainter(),
-                        ),
-                        // cursor indicator
+                        // NetNavi sprite animation
+                        const Center(child: NetNaviSprite()),
+                        // cursor indicator (kept above sprite)
                         Positioned(
                           left: (MediaQuery.of(context).size.width * 0.35) + _cursorX.toDouble() * 6,
                           top: (MediaQuery.of(context).size.width * 0.35) + _cursorY.toDouble() * 6,

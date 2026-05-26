@@ -17,6 +17,7 @@ import 'modules/combat/combat_provider.dart';
 // import 'modules/bluetooth/ble_provider.dart';
 import 'shared/theme/pet_theme.dart';
 import 'ui/pet_bottom_widget.dart';
+import 'ui/main_nav.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -123,8 +124,10 @@ class ProjectPetApp extends StatelessWidget {
         theme: PetTheme.dark(), // Always dark – LCD aesthetic
         localizationsDelegates: AppLocalizations.localizationsDelegates,
         supportedLocales: AppLocalizations.supportedLocales,
+        // Primary entry point for mobile platforms: use a simple 3-tab nav
+        // (Pet, Chips, BLE). Keep existing route generator for deep links.
+        home: const MainNav(),
         onGenerateRoute: AppRouter.generateRoute,
-        initialRoute: hasNavi ? AppRouter.home : AppRouter.onboarding,
       ),
     );
   }
