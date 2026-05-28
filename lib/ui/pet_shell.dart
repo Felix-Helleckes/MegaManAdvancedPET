@@ -1,11 +1,28 @@
+import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import '../core/app_router.dart';
 import '../modules/combat/combat_provider.dart';
-// removed unused import: step_service
 import '../modules/singleplayer/singleplayer_provider.dart';
 import 'netnavi_sprite.dart';
+
+// Scanline painter for LCD
+class _ScanlinePainter extends CustomPainter {
+  final Color lineColor;
+  _ScanlinePainter({required this.lineColor});
+  @override
+  void paint(Canvas canvas, Size size) {
+    final paint = Paint()..color = lineColor;
+    const spacing = 6.0;
+    for (double y = 0; y < size.height; y += spacing) {
+      canvas.drawRect(Rect.fromLTWH(0, y, size.width, 1), paint);
+    }
+  }
+
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
+}
 
 class PetShell extends StatefulWidget {
   const PetShell({super.key});
@@ -18,6 +35,7 @@ class _PetShellState extends State<PetShell> {
   int _cursorX = 0;
   int _cursorY = 0;
   bool _slotFlash = false;
+  int _selectedIndex = 0;
   @override
   void initState() {
     super.initState();
@@ -37,106 +55,156 @@ class _PetShellState extends State<PetShell> {
 
   @override
   Widget build(BuildContext context) {
-    // Shell scaffold: left/right/overlay areas
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: Colors.transparent,
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: _selectedIndex,
+        onTap: (i) => setState(() => _selectedIndex = i),
+        items: const [
+          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Pet'),
+          BottomNavigationBarItem(icon: Icon(Icons.grid_on), label: 'Chips'),
+          BottomNavigationBarItem(icon: Icon(Icons.bluetooth), label: 'BLE'),
+        ],
+      ),
       body: SafeArea(
         child: Stack(
           children: [
-            // Center LCD area including Chip Slot
-            Center(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  // Chip slot (drag target)
-                  DragTarget<int>(
-                    onWillAcceptWithDetails: (d) => true,
-                    onAcceptWithDetails: (d) {
-                      HapticFeedback.mediumImpact();
-                      setState(() => _slotFlash = true);
-                      Future.delayed(const Duration(milliseconds: 250), () {
-                        if (!mounted) return;
-                        setState(() => _slotFlash = false);
-                      });
-                      final sp = Provider.of<SingleplayerProvider>(context, listen: false);
-                      final idx = d.data;
-                      if (idx >= 0 && idx < sp.chips.length) {
-                        final chip = sp.chips[idx];
-                        // Start combat immediately and select the chip
-                        try {
-                          final combat = Provider.of<CombatProvider>(context, listen: false);
-                          combat.startCombat(playerNavi: sp.navi, playerChips: sp.chips, isVirus: true);
-                          combat.selectChip(chip);
-                        } catch (_) {}
-                        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Slot-In! Starting battle...')));
-                        Navigator.pushNamed(context, AppRouter.combat, arguments: {'isVirus': true});
-                      }
-                    },
-                    builder: (context, a, r) {
-                      final mq = MediaQuery.of(context).size;
-                      final slotW = (mq.width * 0.45).clamp(120.0, 240.0);
-                      return Container(
-                      width: slotW,
-                      height: (slotW * 0.22).clamp(28.0, 48.0),
-                      margin: EdgeInsets.only(bottom: mq.height * 0.012),
-                      decoration: BoxDecoration(
-                        color: _slotFlash ? Colors.greenAccent.withOpacity(0.6) : (a.isNotEmpty ? Colors.greenAccent.withOpacity(0.25) : Colors.black87),
-                        borderRadius: BorderRadius.circular(8),
-                        border: Border.all(color: Colors.white12),
-                      ),
-                      child: const Center(child: Text('DRAG CHIP HERE', style: TextStyle(color: Colors.white70, fontSize: 12))),
-                    );
-                    },
-                  ),
-
-                  Container(
-                    width: MediaQuery.of(context).size.width * 0.7,
-                    height: (MediaQuery.of(context).size.width * 0.7).clamp(220.0, 420.0),
-                    decoration: BoxDecoration(
-                      color: const Color(0xFF0A1A1F),
-                      borderRadius: BorderRadius.circular(6),
-                    ),
-                    child: Stack(
-                      children: [
-                        // NetNavi sprite animation
-                        const Center(child: NetNaviSprite()),
-                        // cursor indicator (kept above sprite)
-                        Positioned(
-                          left: (MediaQuery.of(context).size.width * 0.35) + _cursorX.toDouble() * 6,
-                          top: (MediaQuery.of(context).size.width * 0.35) + _cursorY.toDouble() * 6,
-                          child: const Icon(Icons.circle, size: 8, color: Colors.greenAccent),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
-
-            // Bottom D-pad and buttons
-            Align(
-              alignment: Alignment.bottomCenter,
-              child: Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    _DPad(onMove: _moveCursor),
-                    const SizedBox(width: 24),
-                    Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        ElevatedButton(onPressed: () => HapticFeedback.selectionClick(), child: const Text('A')),
-                        const SizedBox(height: 8),
-                        ElevatedButton(onPressed: () => _openChipDrawer(context), child: const Text('B')),
-                      ],
-                    )
+            // Outer skeuomorphic shell
+            Positioned.fill(
+              child: Container(
+                decoration: BoxDecoration(
+                  gradient: const LinearGradient(colors: [Color(0xFF083E8C), Color(0xFF2A5FB0)]), // royal blue -> lighter
+                  borderRadius: BorderRadius.circular(20),
+                  boxShadow: [
+                    BoxShadow(color: Colors.black.withOpacity(0.6), offset: const Offset(0, 8), blurRadius: 18),
+                    BoxShadow(color: Colors.white.withOpacity(0.06), offset: const Offset(-4, -4), blurRadius: 6, spreadRadius: -2),
                   ],
+                ),
+                child: Center(
+                  child: Container(
+                    width: MediaQuery.of(context).size.width * 0.9,
+                    height: MediaQuery.of(context).size.height * 0.9,
+                    decoration: BoxDecoration(
+                      color: Colors.grey.shade200,
+                      borderRadius: BorderRadius.circular(16),
+                      boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.25), blurRadius: 12, offset: const Offset(0, 6))],
+                    ),
+                    child: _selectedIndex == 1 ? _buildChipsView(context) : _buildPetView(context),
+                  ),
                 ),
               ),
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  Widget _buildPetView(BuildContext context) {
+    final mq = MediaQuery.of(context).size;
+    return Column(
+      children: [
+        // LCD display
+        Expanded(
+          flex: 6,
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Container(
+              decoration: BoxDecoration(
+                color: const Color(0xFF97A98F),
+                border: Border.all(color: Colors.black, width: 6),
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: Stack(
+                children: [
+                  // Animated sprite centered
+                  const Center(child: NetNaviSprite()),
+                  // Scanlines overlay
+                  Positioned.fill(
+                    child: CustomPaint(
+                      painter: _ScanlinePainter(lineColor: Colors.black.withOpacity(0.05)),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+
+        // Buttons area
+        Expanded(
+          flex: 2,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 8.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Transform.rotate(
+                  angle: 20 * (math.pi / 180),
+                  child: SizedBox(
+                    width: 64,
+                    height: 64,
+                    child: ElevatedButton(
+                      onPressed: () => HapticFeedback.selectionClick(),
+                      style: ElevatedButton.styleFrom(shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8))),
+                      child: const Text('1'),
+                    ),
+                  ),
+                ),
+                // Center D-Pad
+                _DPad(onMove: _moveCursor, size: 88),
+                Transform.rotate(
+                  angle: -20 * (math.pi / 180),
+                  child: SizedBox(
+                    width: 64,
+                    height: 64,
+                    child: ElevatedButton(
+                      onPressed: () => _openChipDrawer(context),
+                      style: ElevatedButton.styleFrom(shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8))),
+                      child: const Text('2'),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildChipsView(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(12.0),
+      child: Column(
+        children: [
+          Row(
+            children: [
+              const Expanded(child: Text('Chip Folder', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold))),
+              IconButton(
+                onPressed: () async {
+                  final sp = Provider.of<SingleplayerProvider>(context, listen: false);
+                  await sp.clearAllChips();
+                },
+                icon: const Icon(Icons.delete_forever),
+                tooltip: 'Alle Chips leeren',
+              )
+            ],
+          ),
+          const SizedBox(height: 8),
+          Expanded(
+            child: Consumer<SingleplayerProvider>(builder: (_, sp, __) {
+              final chips = sp.chips;
+              if (chips.isEmpty) return const Center(child: Text('No chips', style: TextStyle(color: Colors.black54)));
+              return GridView.count(
+                crossAxisCount: 4,
+                mainAxisSpacing: 8,
+                crossAxisSpacing: 8,
+                children: chips.map((c) => _chipWidget(c, small: true)).toList(),
+              );
+            }),
+          )
+        ],
       ),
     );
   }
@@ -236,13 +304,16 @@ class _GridPainter extends CustomPainter {
 
 class _DPad extends StatelessWidget {
   final void Function(int dx, int dy) onMove;
-  const _DPad({required this.onMove});
+  final double size;
+  const _DPad({required this.onMove, this.size = 120});
 
   @override
   Widget build(BuildContext context) {
+    final iconConstraint = (size * 0.28).clamp(20.0, 36.0);
+    final iconSz = (size * 0.18).clamp(14.0, 24.0);
     return SizedBox(
-      width: 120,
-      height: 120,
+      width: size,
+      height: size,
       child: Stack(
         children: [
           Positioned.fill(
@@ -254,19 +325,43 @@ class _DPad extends StatelessWidget {
             ),
           ),
           Center(
-            child: Column(
+                child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                IconButton(onPressed: () => onMove(0, -1), icon: const Icon(Icons.keyboard_arrow_up)),
+                IconButton(
+                  onPressed: () => onMove(0, -1),
+                  icon: const Icon(Icons.keyboard_arrow_up),
+                  padding: EdgeInsets.zero,
+                  constraints: BoxConstraints.tightFor(width: iconConstraint, height: iconConstraint),
+                  iconSize: iconSz,
+                ),
                 Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    IconButton(onPressed: () => onMove(-1, 0), icon: const Icon(Icons.keyboard_arrow_left)),
-                    const SizedBox(width: 24),
-                    IconButton(onPressed: () => onMove(1, 0), icon: const Icon(Icons.keyboard_arrow_right)),
+                    IconButton(
+                      onPressed: () => onMove(-1, 0),
+                      icon: const Icon(Icons.keyboard_arrow_left),
+                      padding: EdgeInsets.zero,
+                      constraints: BoxConstraints.tightFor(width: iconConstraint, height: iconConstraint),
+                      iconSize: iconSz,
+                    ),
+                    const SizedBox(width: 12),
+                    IconButton(
+                      onPressed: () => onMove(1, 0),
+                      icon: const Icon(Icons.keyboard_arrow_right),
+                      padding: EdgeInsets.zero,
+                      constraints: BoxConstraints.tightFor(width: iconConstraint, height: iconConstraint),
+                      iconSize: iconSz,
+                    ),
                   ],
                 ),
-                IconButton(onPressed: () => onMove(0, 1), icon: const Icon(Icons.keyboard_arrow_down)),
+                IconButton(
+                  onPressed: () => onMove(0, 1),
+                  icon: const Icon(Icons.keyboard_arrow_down),
+                  padding: EdgeInsets.zero,
+                  constraints: BoxConstraints.tightFor(width: iconConstraint, height: iconConstraint),
+                  iconSize: iconSz,
+                ),
               ],
             ),
           )

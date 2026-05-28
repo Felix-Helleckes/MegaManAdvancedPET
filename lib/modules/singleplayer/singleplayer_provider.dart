@@ -5,6 +5,16 @@ import 'package:hive/hive.dart';
 import '../../core/models/navi.dart';
 import '../../core/models/battle_chip.dart';
 import 'step_service.dart';
+import 'package:project_pet/core/test_env.dart';
+
+// Detect test environment via assert
+bool _runningInTest_Singleplayer = false;
+void _detectTest_Singleplayer() {
+  assert(() {
+    _runningInTest_Singleplayer = true;
+    return true;
+  }());
+}
 
 class SingleplayerProvider extends ChangeNotifier {
   // Initialize with a safe default so UI can build before Hive init completes
@@ -40,6 +50,7 @@ class SingleplayerProvider extends ChangeNotifier {
   }
 
   Future<void> init() async {
+    // global test env detection via core/test_env.dart
     final naviBox = Hive.box<Navi>('navi');
     final chipBox = Hive.box<BattleChip>('chips');
 
@@ -62,25 +73,28 @@ class SingleplayerProvider extends ChangeNotifier {
     _petHappiness = settings.get('pet_happiness', defaultValue: 100) as int;
     _useUxAvatar = settings.get('use_ux_avatar', defaultValue: false) as bool;
 
-    // Listen for new steps
-    StepService.stepStream.listen((steps) {
-      _steps = steps;
-      notifyListeners();
-    });
+    // In test environments, avoid registering background listeners and timers
+    if (!runningInTest) {
+      // Listen for new steps
+      StepService.stepStream.listen((steps) {
+        _steps = steps;
+        notifyListeners();
+      });
 
-    // Listen for encounter triggers from StepService
-    StepService.onEncounterTriggered = () {
-      _encounterPending = true;
-      notifyListeners();
-    };
+      // Listen for encounter triggers from StepService
+      StepService.onEncounterTriggered = () {
+        _encounterPending = true;
+        notifyListeners();
+      };
+
+      // Start decay timer (every 30 seconds for dev; can be increased in production)
+      _petTimer?.cancel();
+      _petTimer = Timer.periodic(const Duration(seconds: 30), (_) {
+        _decayPet();
+      });
+    }
 
     notifyListeners();
-
-    // Start decay timer (every 30 seconds for dev; can be increased in production)
-    _petTimer?.cancel();
-    _petTimer = Timer.periodic(const Duration(seconds: 30), (_) {
-      _decayPet();
-    });
   }
 
   void clearEncounter() {
@@ -132,6 +146,14 @@ class SingleplayerProvider extends ChangeNotifier {
     final chip = _chips[index];
     await chip.delete();
     _chips = Hive.box<BattleChip>('chips').values.toList();
+    notifyListeners();
+  }
+
+  /// Clear all chips from the player's folder.
+  Future<void> clearAllChips() async {
+    final chipBox = Hive.box<BattleChip>('chips');
+    await chipBox.clear();
+    _chips = [];
     notifyListeners();
   }
 

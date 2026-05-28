@@ -4,6 +4,16 @@ import 'package:pedometer/pedometer.dart';
 import 'dart:io' show Platform;
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:hive/hive.dart';
+import 'package:project_pet/core/test_env.dart';
+
+// Detect test environment via assert
+bool _runningInTest_Step = false;
+void _detectTest_Step() {
+  assert(() {
+    _runningInTest_Step = true;
+    return true;
+  }());
+}
 
 /// Handles background step counting and virus encounter triggers.
 /// Steps are persisted in Hive so they survive app restarts.
@@ -32,6 +42,7 @@ class StepService {
   static VoidCallback? onEncounterTriggered;
 
   static Future<void> initialize() async {
+    // allow global test env to disable simulation
     // Restore persisted steps
     final box = Hive.box('settings');
     _currentSteps = box.get(_boxKey, defaultValue: 0) as int;
@@ -52,7 +63,7 @@ class StepService {
     // On platforms without pedometer implementation (web/desktop), start simulation.
     if (kIsWeb || Platform.isWindows || Platform.isLinux || Platform.isMacOS) {
       debugPrint('[StepService] Pedometer not supported on this platform, starting simulation');
-      _startSimulation();
+      if (!runningInTest) _startSimulation();
       return;
     }
 

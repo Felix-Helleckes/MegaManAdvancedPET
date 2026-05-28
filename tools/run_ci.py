@@ -2,11 +2,26 @@ import subprocess
 import sys
 import json
 from pathlib import Path
+import shutil
 
 ROOT = Path(__file__).resolve().parents[1]
 
+def _resolve_exe(cmd):
+    # If command is a list and the first element is 'flutter', try to find full path on PATH
+    if isinstance(cmd, (list, tuple)) and len(cmd) > 0 and cmd[0] == 'flutter':
+        path = shutil.which('flutter')
+        if path:
+            cmd = list(cmd)
+            cmd[0] = path
+    return cmd
+
 def run(cmd, **kwargs):
-    print(f"Running: {' '.join(cmd)}")
+    cmd = _resolve_exe(cmd)
+    try:
+        printable = ' '.join(cmd) if isinstance(cmd, (list, tuple)) else str(cmd)
+    except Exception:
+        printable = str(cmd)
+    print(f"Running: {printable}")
     res = subprocess.run(cmd, cwd=ROOT, **kwargs)
     print(f"Exit: {res.returncode}\n")
     return res.returncode

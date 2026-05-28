@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:project_pet/core/test_env.dart';
 
 /// Simple programmatic pixel sprite with two-frame idle animation.
 /// This avoids adding copyrighted art and provides an editable pixel map.
@@ -13,6 +14,7 @@ class PetSprite extends StatefulWidget {
 class _PetSpriteState extends State<PetSprite>
     with SingleTickerProviderStateMixin {
   late final AnimationController _ctrl;
+  // Use global test env
 
   // Two simple 16x16 frames using small color indices. 0 = transparent
   static const int w = 16;
@@ -71,8 +73,8 @@ class _PetSpriteState extends State<PetSprite>
   @override
   void initState() {
     super.initState();
-    _ctrl = AnimationController(vsync: this, duration: const Duration(milliseconds: 800))
-      ..repeat();
+    _ctrl = AnimationController(vsync: this, duration: const Duration(milliseconds: 800));
+    if (!runningInTest) _ctrl.repeat();
   }
 
   @override

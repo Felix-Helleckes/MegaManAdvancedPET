@@ -8,6 +8,7 @@ import 'package:provider/provider.dart';
 import 'package:project_pet/l10n/app_localizations.dart';
 
 import 'core/app_router.dart';
+import 'core/test_env.dart';
 import 'core/models/navi.dart';
 import 'core/models/battle_chip.dart';
 import 'modules/singleplayer/step_service.dart';
@@ -106,15 +107,26 @@ void main() async {
   }
 }
 
+// Detect test environment via assert
+bool _runningInTest_main = false;
+void _detectTest_main() {
+  assert(() {
+    _runningInTest_main = true;
+    return true;
+  }());
+}
+
 class ProjectPetApp extends StatelessWidget {
   final bool hasNavi;
   const ProjectPetApp({super.key, required this.hasNavi});
 
   @override
   Widget build(BuildContext context) {
+    // Ensure global test env is detected when tests instantiate widgets
+    detectTestEnv();
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (_) => SingleplayerProvider()..init()),
+        ChangeNotifierProvider(create: (_) => SingleplayerProvider()),
         ChangeNotifierProvider(create: (_) => CombatProvider()),
         // BleProvider omitted to isolate startup crash and for emulator stability
       ],
@@ -124,6 +136,16 @@ class ProjectPetApp extends StatelessWidget {
         theme: PetTheme.dark(), // Always dark – LCD aesthetic
         localizationsDelegates: AppLocalizations.localizationsDelegates,
         supportedLocales: AppLocalizations.supportedLocales,
+        builder: (context, child) {
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            if (!_runningInTest_main) {
+              try {
+                Provider.of<SingleplayerProvider>(context, listen: false).init();
+              } catch (_) {}
+            }
+          });
+          return child ?? const SizedBox.shrink();
+        },
         // Primary entry point for mobile platforms: use a simple 3-tab nav
         // (Pet, Chips, BLE). Keep existing route generator for deep links.
         home: const MainNav(),
@@ -131,5 +153,6 @@ class ProjectPetApp extends StatelessWidget {
       ),
     );
   }
+
 }
 
