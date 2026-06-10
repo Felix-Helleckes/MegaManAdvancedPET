@@ -1,18 +1,8 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:project_pet/core/test_env.dart';
-
-// Detect test environment via assert (only runs in debug/test).
-bool _runningInTest = false;
-void _detectTest() {
-  assert(() {
-    _runningInTest = true;
-    return true;
-  }());
-}
 
 class NetNaviSprite extends StatefulWidget {
   final String metaPath; // path to JSON metadata in assets

@@ -7,15 +7,6 @@ import '../../core/models/battle_chip.dart';
 import 'step_service.dart';
 import 'package:project_pet/core/test_env.dart';
 
-// Detect test environment via assert
-bool _runningInTest_Singleplayer = false;
-void _detectTest_Singleplayer() {
-  assert(() {
-    _runningInTest_Singleplayer = true;
-    return true;
-  }());
-}
-
 class SingleplayerProvider extends ChangeNotifier {
   // Initialize with a safe default so UI can build before Hive init completes
   Navi _navi = Navi(name: 'Player');

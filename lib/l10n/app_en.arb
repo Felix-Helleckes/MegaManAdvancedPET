@@ -1,110 +1,161 @@
 {
-    "appTitle": "Project PET",
-    "homeCyberMeter": "CYBER METER",
-    "homeSteps": "{count} steps",
-    "@homeSteps": {
-        "placeholders": {
-            "count": {
-                "type": "int"
-            }
-        }
-    },
-    "homeStepsToEncounter": "{count} steps to next encounter",
-    "@homeStepsToEncounter": {
-        "placeholders": {
-            "count": {
-                "type": "int"
-            }
-        }
-    },
-    "homeZenny": "ZENNY",
-    "homeWins": "WINS",
-    "homeLosses": "LOSSES",
-    "homeBattleVirus": "BATTLE VIRUS",
-    "homeJackIn": "JACK IN  [ BLE ]",
-    "homeDebug": "DEBUG",
+    "appTitle": "Project PET - Advanced",
+    "@@locale": "en",
+    
     "navHome": "HOME",
-    "navChips": "CHIPS",
+    "navPetStatus": "STATUS",
+    "navEvolution": "EVOLUTION",
+    "navChipBrowser": "CHIPS",
+    "navBattle": "BATTLE",
+    "navOnlineHub": "ONLINE",
+    "navCollection": "LIBRARY",
+    "navMissions": "MISSIONS",
+    "navSettings": "SETTINGS",
     "navBle": "BLE",
+    
+    "screenStartTitle": "START / HOME",
+    "screenStatusTitle": "PET STATUS",
+    "screenEvolutionTitle": "EVOLUTION",
+    "screenChipBrowserTitle": "CHIP BROWSER",
+    "screenChipDetailTitle": "CHIP DETAIL",
+    "screenBattleLocalTitle": "BATTLE (LOCAL)",
+    "screenBattleOnlineTitle": "BATTLE (ONLINE)",
+    "screenOnlineHubTitle": "ONLINE HUB",
+    "screenCollectionTitle": "COLLECTION",
+    "screenMissionsTitle": "MISSIONS",
+    "screenSettingsTitle": "SETTINGS",
+    
+    "petStatusHp": "HP: {current}/{max}",
+    "@petStatusHp": {"placeholders": {"current": {"type": "int"}, "max": {"type": "int"}}},
+    "petStatusLevel": "Level: {level}",
+    "@petStatusLevel": {"placeholders": {"level": {"type": "int"}}},
+    "petStatusExp": "EXP: {current}/{next}",
+    "@petStatusExp": {"placeholders": {"current": {"type": "int"}, "next": {"type": "int"}}},
+    "petStatusAttack": "ATTACK: {value}",
+    "@petStatusAttack": {"placeholders": {"value": {"type": "int"}}},
+    "petStatusRapid": "RAPID: {value}",
+    "@petStatusRapid": {"placeholders": {"value": {"type": "int"}}},
+    "petStatusCharge": "CHARGE: {value}",
+    "@petStatusCharge": {"placeholders": {"value": {"type": "int"}}},
+    "petStatusHunger": "HUNGER: {value}%",
+    "@petStatusHunger": {"placeholders": {"value": {"type": "int"}}},
+    "petStatusHappiness": "HAPPINESS: {value}%",
+    "@petStatusHappiness": {"placeholders": {"value": {"type": "int"}}},
+    
+    "evolutionAvailable": "EVOLUTION AVAILABLE!",
+    "evolutionFormStandard": "STANDARD",
+    "evolutionFormMega": "MEGA",
+    "evolutionFormGiga": "GIGA",
+    
+    "chipBrowserAll": "ALL",
+    "chipBrowserAttack": "ATTACK",
+    "chipBrowserSupport": "SUPPORT",
+    "chipBrowserMega": "MEGA",
+    "chipBrowserFilter": "FILTER",
+    "chipBrowserSort": "SORT",
+    
+    "battleVsWild": "VS VIRUS",
+    "battleVsOpponent": "VS {name}",
+    "@battleVsOpponent": {"placeholders": {"name": {"type": "String"}}},
+    "battleVictory": "VICTORY!",
+    "battleDefeat": "DEFEAT...",
+    "battleReturn": "RETURN HOME",
+    
+    "collectionTotal": "TOTAL: {count}/{max}",
+    "@collectionTotal": {"placeholders": {"count": {"type": "int"}, "max": {"type": "int"}}},
+    
+    "missionsAvailable": "AVAILABLE",
+    "missionsCompleted": "COMPLETED",
+    
+    "settingsLanguage": "LANGUAGE",
+    "settingsTheme": "THEME",
+    "settingsThemeBlue": "CLASSIC BLUE",
+    "settingsThemeRed": "RED",
+    "settingsThemeBlack": "BLACK",
+    "settingsThemeGreen": "GREEN",
+    "settingsThemeYellow": "YELLOW",
+    
+    "commonYes": "YES",
+    "commonNo": "NO",
+    "commonOk": "OK",
+    "commonCancel": "CANCEL",
+    "commonConfirm": "CONFIRM",
+    "commonBack": "BACK",
+    
+    "homeSteps": "{count} STEPS",
+    "@homeSteps": {"placeholders": {"count": {"type": "int"}}},
+    "homeZenny": "ZENNY: {amount}",
+    "@homeZenny": {"placeholders": {"amount": {"type": "int"}}},
+    "homeWins": "WINS: {count}",
+    "@homeWins": {"placeholders": {"count": {"type": "int"}}},
+    "homeLosses": "LOSSES: {count}",
+    "@homeLosses": {"placeholders": {"count": {"type": "int"}}},
+    
     "virusAlertTitle": "⚠️ VIRUS ALERT",
-    "virusAlertMessage": "A virus appeared!\nReady to battle?",
+    "virusAlertMessage": "A VIRUS APPEARED!",
     "virusAlertFlee": "FLEE",
     "virusAlertBattle": "BATTLE!",
-    "onboardingTitle": "SELECT YOUR NETNAVI",
-    "onboardingSubtitle": "Choose your partner for the cyber world. This choice is permanent.",
-    "onboardingConfirm": "CONFIRM {name}?",
-    "@onboardingConfirm": {
-        "placeholders": {
-            "name": {
-                "type": "String"
-            }
-        }
-    },
-    "onboardingYes": "YES",
-    "onboardingNo": "NO",
-    "combatVirusEncounter": "VIRUS ENCOUNTER",
-    "combatPvP": "PVP BATTLE",
-    "combatHp": "HP",
-    "combatStatus": "STATUS: {status}",
-    "@combatStatus": {
-        "placeholders": {
-            "status": {
-                "type": "String"
-            }
-        }
-    },
-    "combatFlee": "FLEE",
-    "combatSendChip": "SEND CHIP",
-    "combatSlash": ">> SLASH! <<",
-    "combatWaiting": "WAITING FOR OPPONENT...",
-    "combatVictory": "VICTORY!",
-    "combatDefeat": "DEFEAT...",
-    "combatReturn": "RETURN",
-    "combatGotData": "Got {zenny}z and {chip}!",
-    "@combatGotData": {
-        "placeholders": {
-            "zenny": {
-                "type": "int"
-            },
-            "chip": {
-                "type": "String"
-            }
-        }
-    },
-    "combatSelectChip": "SELECT CHIP",
-    "combatShake": "SHAKE PHONE OR",
-    "combatAwesome": "AWESOME!",
-    "combatRetreat": "RETREAT",
+    
+    "bleRadarRing": "JACK IN",
     "bleTitle": "BLE RADAR",
     "bleScan": "SCAN",
     "bleStatus": "Status: {status}",
-    "@bleStatus": {
-        "placeholders": {
-            "status": {
-                "type": "String"
-            }
-        }
-    },
+    "@bleStatus": {"placeholders": {"status": {"type": "String"}}},
     "bleNavisFound": "Found Navis:",
     "bleConnect": "Connect",
-    "bleRadarRing": "JACK IN",
     "bleScanning": "SCANNING...",
     "bleScanForNavis": "SCAN FOR NAVIS",
     "bleNavisDetected": "NAVIS DETECTED",
     "bleDisc": "DISC.",
+    
+    "combatVirusEncounter": "VIRUS ENCOUNTER",
+    "combatPvP": "PVP BATTLE",
+    "combatHp": "HP",
+    "combatStatus": "STATUS: {status}",
+    "@combatStatus": {"placeholders": {"status": {"type": "String"}}},
+    "combatFlee": "FLEE",
+    "combatSendChip": "SEND CHIP",
+    "combatSlash": ">> SLASH! <<",
+    "combatWaiting": "WAITING FOR OPPONENT...",
+    "combatSelectChip": "SELECT CHIP",
+    "combatShake": "SHAKE PHONE OR",
+    "combatAwesome": "AWESOME!",
+    "combatRetreat": "RETREAT",
+    "combatGotData": "Got {zenny}z and {chip}!",
+    "@combatGotData": {"placeholders": {"zenny": {"type": "int"}, "chip": {"type": "String"}}},
+    
     "chipFolderTitle": "CHIP FOLDER",
     "chipFolderEmpty": "Your folder is empty.",
     "chipDmg": "DMG: {damage}",
-    "@chipDmg": {
-        "placeholders": {
-            "damage": {
-                "type": "int"
-            }
-        }
-    },
+    "@chipDmg": {"placeholders": {"damage": {"type": "int"}}},
+    
+    "onboardingTitle": "WELCOME",
+    "onboardingSubtitle": "Create your Navi",
+    "onboardingYes": "YES",
+    "onboardingNo": "NO",
+    "onboardingConfirm": "CONFIRM",
+    
+    "combatVictory": "VICTORY!",
+    "combatDefeat": "DEFEAT...",
+    
+    "chipFolderRarity": "RARITY",
     "chipFolderAll": "ALL",
-    "chipFolderRarity": "RARITY: ",
-    "chipFolderNoChips": "NO CHIPS",
+    "chipFolderNoChips": "No chips",
     "chipFolderDiscard": "DISCARD",
-    "chipFolderKeep": "KEEP"
+    "chipFolderKeep": "KEEP",
+    
+    "homeCyberMeter": "CYBER METER",
+    "homeStepsToEncounter": "Steps to Encounter: {steps}",
+    "@homeStepsToEncounter": {"placeholders": {"steps": {"type": "int"}}},
+    "homeBattleVirus": "BATTLE VIRUS",
+    "homeJackIn": "JACK IN",
+    "homeDebug": "DEBUG",
+    "navChips": "CHIPS",
+    "chipBrowserNoChips": "No chips",
+    "onlineRankedMatch": "RANKED MATCH",
+    "onlineCasualMatch": "CASUAL MATCH",
+    "onlineLeaderboards": "LEADERBOARDS",
+    "collectionProgress": "{percent}%",
+    "@collectionProgress": {"placeholders": {"percent": {"type": "int"}}},
+    "settingsProfile": "PROFILE"
 }

@@ -6,15 +6,6 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:hive/hive.dart';
 import 'package:project_pet/core/test_env.dart';
 
-// Detect test environment via assert
-bool _runningInTest_Step = false;
-void _detectTest_Step() {
-  assert(() {
-    _runningInTest_Step = true;
-    return true;
-  }());
-}
-
 /// Handles background step counting and virus encounter triggers.
 /// Steps are persisted in Hive so they survive app restarts.
 class StepService {

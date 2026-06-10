@@ -101,62 +101,8 @@ abstract class AppLocalizations {
   /// No description provided for @appTitle.
   ///
   /// In en, this message translates to:
-  /// **'Project PET'**
+  /// **'Project PET - Advanced'**
   String get appTitle;
-
-  /// No description provided for @homeCyberMeter.
-  ///
-  /// In en, this message translates to:
-  /// **'CYBER METER'**
-  String get homeCyberMeter;
-
-  /// No description provided for @homeSteps.
-  ///
-  /// In en, this message translates to:
-  /// **'{count} steps'**
-  String homeSteps(int count);
-
-  /// No description provided for @homeStepsToEncounter.
-  ///
-  /// In en, this message translates to:
-  /// **'{count} steps to next encounter'**
-  String homeStepsToEncounter(int count);
-
-  /// No description provided for @homeZenny.
-  ///
-  /// In en, this message translates to:
-  /// **'ZENNY'**
-  String get homeZenny;
-
-  /// No description provided for @homeWins.
-  ///
-  /// In en, this message translates to:
-  /// **'WINS'**
-  String get homeWins;
-
-  /// No description provided for @homeLosses.
-  ///
-  /// In en, this message translates to:
-  /// **'LOSSES'**
-  String get homeLosses;
-
-  /// No description provided for @homeBattleVirus.
-  ///
-  /// In en, this message translates to:
-  /// **'BATTLE VIRUS'**
-  String get homeBattleVirus;
-
-  /// No description provided for @homeJackIn.
-  ///
-  /// In en, this message translates to:
-  /// **'JACK IN  [ BLE ]'**
-  String get homeJackIn;
-
-  /// No description provided for @homeDebug.
-  ///
-  /// In en, this message translates to:
-  /// **'DEBUG'**
-  String get homeDebug;
 
   /// No description provided for @navHome.
   ///
@@ -164,17 +110,383 @@ abstract class AppLocalizations {
   /// **'HOME'**
   String get navHome;
 
-  /// No description provided for @navChips.
+  /// No description provided for @navPetStatus.
+  ///
+  /// In en, this message translates to:
+  /// **'STATUS'**
+  String get navPetStatus;
+
+  /// No description provided for @navEvolution.
+  ///
+  /// In en, this message translates to:
+  /// **'EVOLUTION'**
+  String get navEvolution;
+
+  /// No description provided for @navChipBrowser.
   ///
   /// In en, this message translates to:
   /// **'CHIPS'**
-  String get navChips;
+  String get navChipBrowser;
+
+  /// No description provided for @navBattle.
+  ///
+  /// In en, this message translates to:
+  /// **'BATTLE'**
+  String get navBattle;
+
+  /// No description provided for @navOnlineHub.
+  ///
+  /// In en, this message translates to:
+  /// **'ONLINE'**
+  String get navOnlineHub;
+
+  /// No description provided for @navCollection.
+  ///
+  /// In en, this message translates to:
+  /// **'LIBRARY'**
+  String get navCollection;
+
+  /// No description provided for @navMissions.
+  ///
+  /// In en, this message translates to:
+  /// **'MISSIONS'**
+  String get navMissions;
+
+  /// No description provided for @navSettings.
+  ///
+  /// In en, this message translates to:
+  /// **'SETTINGS'**
+  String get navSettings;
 
   /// No description provided for @navBle.
   ///
   /// In en, this message translates to:
   /// **'BLE'**
   String get navBle;
+
+  /// No description provided for @screenStartTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'START / HOME'**
+  String get screenStartTitle;
+
+  /// No description provided for @screenStatusTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'PET STATUS'**
+  String get screenStatusTitle;
+
+  /// No description provided for @screenEvolutionTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'EVOLUTION'**
+  String get screenEvolutionTitle;
+
+  /// No description provided for @screenChipBrowserTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'CHIP BROWSER'**
+  String get screenChipBrowserTitle;
+
+  /// No description provided for @screenChipDetailTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'CHIP DETAIL'**
+  String get screenChipDetailTitle;
+
+  /// No description provided for @screenBattleLocalTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'BATTLE (LOCAL)'**
+  String get screenBattleLocalTitle;
+
+  /// No description provided for @screenBattleOnlineTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'BATTLE (ONLINE)'**
+  String get screenBattleOnlineTitle;
+
+  /// No description provided for @screenOnlineHubTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'ONLINE HUB'**
+  String get screenOnlineHubTitle;
+
+  /// No description provided for @screenCollectionTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'COLLECTION'**
+  String get screenCollectionTitle;
+
+  /// No description provided for @screenMissionsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'MISSIONS'**
+  String get screenMissionsTitle;
+
+  /// No description provided for @screenSettingsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'SETTINGS'**
+  String get screenSettingsTitle;
+
+  /// No description provided for @petStatusHp.
+  ///
+  /// In en, this message translates to:
+  /// **'HP: {current}/{max}'**
+  String petStatusHp(int current, int max);
+
+  /// No description provided for @petStatusLevel.
+  ///
+  /// In en, this message translates to:
+  /// **'Level: {level}'**
+  String petStatusLevel(int level);
+
+  /// No description provided for @petStatusExp.
+  ///
+  /// In en, this message translates to:
+  /// **'EXP: {current}/{next}'**
+  String petStatusExp(int current, int next);
+
+  /// No description provided for @petStatusAttack.
+  ///
+  /// In en, this message translates to:
+  /// **'ATTACK: {value}'**
+  String petStatusAttack(int value);
+
+  /// No description provided for @petStatusRapid.
+  ///
+  /// In en, this message translates to:
+  /// **'RAPID: {value}'**
+  String petStatusRapid(int value);
+
+  /// No description provided for @petStatusCharge.
+  ///
+  /// In en, this message translates to:
+  /// **'CHARGE: {value}'**
+  String petStatusCharge(int value);
+
+  /// No description provided for @petStatusHunger.
+  ///
+  /// In en, this message translates to:
+  /// **'HUNGER: {value}%'**
+  String petStatusHunger(int value);
+
+  /// No description provided for @petStatusHappiness.
+  ///
+  /// In en, this message translates to:
+  /// **'HAPPINESS: {value}%'**
+  String petStatusHappiness(int value);
+
+  /// No description provided for @evolutionAvailable.
+  ///
+  /// In en, this message translates to:
+  /// **'EVOLUTION AVAILABLE!'**
+  String get evolutionAvailable;
+
+  /// No description provided for @evolutionFormStandard.
+  ///
+  /// In en, this message translates to:
+  /// **'STANDARD'**
+  String get evolutionFormStandard;
+
+  /// No description provided for @evolutionFormMega.
+  ///
+  /// In en, this message translates to:
+  /// **'MEGA'**
+  String get evolutionFormMega;
+
+  /// No description provided for @evolutionFormGiga.
+  ///
+  /// In en, this message translates to:
+  /// **'GIGA'**
+  String get evolutionFormGiga;
+
+  /// No description provided for @chipBrowserAll.
+  ///
+  /// In en, this message translates to:
+  /// **'ALL'**
+  String get chipBrowserAll;
+
+  /// No description provided for @chipBrowserAttack.
+  ///
+  /// In en, this message translates to:
+  /// **'ATTACK'**
+  String get chipBrowserAttack;
+
+  /// No description provided for @chipBrowserSupport.
+  ///
+  /// In en, this message translates to:
+  /// **'SUPPORT'**
+  String get chipBrowserSupport;
+
+  /// No description provided for @chipBrowserMega.
+  ///
+  /// In en, this message translates to:
+  /// **'MEGA'**
+  String get chipBrowserMega;
+
+  /// No description provided for @chipBrowserFilter.
+  ///
+  /// In en, this message translates to:
+  /// **'FILTER'**
+  String get chipBrowserFilter;
+
+  /// No description provided for @chipBrowserSort.
+  ///
+  /// In en, this message translates to:
+  /// **'SORT'**
+  String get chipBrowserSort;
+
+  /// No description provided for @battleVsWild.
+  ///
+  /// In en, this message translates to:
+  /// **'VS VIRUS'**
+  String get battleVsWild;
+
+  /// No description provided for @battleVsOpponent.
+  ///
+  /// In en, this message translates to:
+  /// **'VS {name}'**
+  String battleVsOpponent(String name);
+
+  /// No description provided for @battleVictory.
+  ///
+  /// In en, this message translates to:
+  /// **'VICTORY!'**
+  String get battleVictory;
+
+  /// No description provided for @battleDefeat.
+  ///
+  /// In en, this message translates to:
+  /// **'DEFEAT...'**
+  String get battleDefeat;
+
+  /// No description provided for @battleReturn.
+  ///
+  /// In en, this message translates to:
+  /// **'RETURN HOME'**
+  String get battleReturn;
+
+  /// No description provided for @collectionTotal.
+  ///
+  /// In en, this message translates to:
+  /// **'TOTAL: {count}/{max}'**
+  String collectionTotal(int count, int max);
+
+  /// No description provided for @missionsAvailable.
+  ///
+  /// In en, this message translates to:
+  /// **'AVAILABLE'**
+  String get missionsAvailable;
+
+  /// No description provided for @missionsCompleted.
+  ///
+  /// In en, this message translates to:
+  /// **'COMPLETED'**
+  String get missionsCompleted;
+
+  /// No description provided for @settingsLanguage.
+  ///
+  /// In en, this message translates to:
+  /// **'LANGUAGE'**
+  String get settingsLanguage;
+
+  /// No description provided for @settingsTheme.
+  ///
+  /// In en, this message translates to:
+  /// **'THEME'**
+  String get settingsTheme;
+
+  /// No description provided for @settingsThemeBlue.
+  ///
+  /// In en, this message translates to:
+  /// **'CLASSIC BLUE'**
+  String get settingsThemeBlue;
+
+  /// No description provided for @settingsThemeRed.
+  ///
+  /// In en, this message translates to:
+  /// **'RED'**
+  String get settingsThemeRed;
+
+  /// No description provided for @settingsThemeBlack.
+  ///
+  /// In en, this message translates to:
+  /// **'BLACK'**
+  String get settingsThemeBlack;
+
+  /// No description provided for @settingsThemeGreen.
+  ///
+  /// In en, this message translates to:
+  /// **'GREEN'**
+  String get settingsThemeGreen;
+
+  /// No description provided for @settingsThemeYellow.
+  ///
+  /// In en, this message translates to:
+  /// **'YELLOW'**
+  String get settingsThemeYellow;
+
+  /// No description provided for @commonYes.
+  ///
+  /// In en, this message translates to:
+  /// **'YES'**
+  String get commonYes;
+
+  /// No description provided for @commonNo.
+  ///
+  /// In en, this message translates to:
+  /// **'NO'**
+  String get commonNo;
+
+  /// No description provided for @commonOk.
+  ///
+  /// In en, this message translates to:
+  /// **'OK'**
+  String get commonOk;
+
+  /// No description provided for @commonCancel.
+  ///
+  /// In en, this message translates to:
+  /// **'CANCEL'**
+  String get commonCancel;
+
+  /// No description provided for @commonConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'CONFIRM'**
+  String get commonConfirm;
+
+  /// No description provided for @commonBack.
+  ///
+  /// In en, this message translates to:
+  /// **'BACK'**
+  String get commonBack;
+
+  /// No description provided for @homeSteps.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} STEPS'**
+  String homeSteps(int count);
+
+  /// No description provided for @homeZenny.
+  ///
+  /// In en, this message translates to:
+  /// **'ZENNY: {amount}'**
+  String homeZenny(int amount);
+
+  /// No description provided for @homeWins.
+  ///
+  /// In en, this message translates to:
+  /// **'WINS: {count}'**
+  String homeWins(int count);
+
+  /// No description provided for @homeLosses.
+  ///
+  /// In en, this message translates to:
+  /// **'LOSSES: {count}'**
+  String homeLosses(int count);
 
   /// No description provided for @virusAlertTitle.
   ///
@@ -185,7 +497,7 @@ abstract class AppLocalizations {
   /// No description provided for @virusAlertMessage.
   ///
   /// In en, this message translates to:
-  /// **'A virus appeared!\nReady to battle?'**
+  /// **'A VIRUS APPEARED!'**
   String get virusAlertMessage;
 
   /// No description provided for @virusAlertFlee.
@@ -200,35 +512,65 @@ abstract class AppLocalizations {
   /// **'BATTLE!'**
   String get virusAlertBattle;
 
-  /// No description provided for @onboardingTitle.
+  /// No description provided for @bleRadarRing.
   ///
   /// In en, this message translates to:
-  /// **'SELECT YOUR NETNAVI'**
-  String get onboardingTitle;
+  /// **'JACK IN'**
+  String get bleRadarRing;
 
-  /// No description provided for @onboardingSubtitle.
+  /// No description provided for @bleTitle.
   ///
   /// In en, this message translates to:
-  /// **'Choose your partner for the cyber world. This choice is permanent.'**
-  String get onboardingSubtitle;
+  /// **'BLE RADAR'**
+  String get bleTitle;
 
-  /// No description provided for @onboardingConfirm.
+  /// No description provided for @bleScan.
   ///
   /// In en, this message translates to:
-  /// **'CONFIRM {name}?'**
-  String onboardingConfirm(String name);
+  /// **'SCAN'**
+  String get bleScan;
 
-  /// No description provided for @onboardingYes.
+  /// No description provided for @bleStatus.
   ///
   /// In en, this message translates to:
-  /// **'YES'**
-  String get onboardingYes;
+  /// **'Status: {status}'**
+  String bleStatus(String status);
 
-  /// No description provided for @onboardingNo.
+  /// No description provided for @bleNavisFound.
   ///
   /// In en, this message translates to:
-  /// **'NO'**
-  String get onboardingNo;
+  /// **'Found Navis:'**
+  String get bleNavisFound;
+
+  /// No description provided for @bleConnect.
+  ///
+  /// In en, this message translates to:
+  /// **'Connect'**
+  String get bleConnect;
+
+  /// No description provided for @bleScanning.
+  ///
+  /// In en, this message translates to:
+  /// **'SCANNING...'**
+  String get bleScanning;
+
+  /// No description provided for @bleScanForNavis.
+  ///
+  /// In en, this message translates to:
+  /// **'SCAN FOR NAVIS'**
+  String get bleScanForNavis;
+
+  /// No description provided for @bleNavisDetected.
+  ///
+  /// In en, this message translates to:
+  /// **'NAVIS DETECTED'**
+  String get bleNavisDetected;
+
+  /// No description provided for @bleDisc.
+  ///
+  /// In en, this message translates to:
+  /// **'DISC.'**
+  String get bleDisc;
 
   /// No description provided for @combatVirusEncounter.
   ///
@@ -278,30 +620,6 @@ abstract class AppLocalizations {
   /// **'WAITING FOR OPPONENT...'**
   String get combatWaiting;
 
-  /// No description provided for @combatVictory.
-  ///
-  /// In en, this message translates to:
-  /// **'VICTORY!'**
-  String get combatVictory;
-
-  /// No description provided for @combatDefeat.
-  ///
-  /// In en, this message translates to:
-  /// **'DEFEAT...'**
-  String get combatDefeat;
-
-  /// No description provided for @combatReturn.
-  ///
-  /// In en, this message translates to:
-  /// **'RETURN'**
-  String get combatReturn;
-
-  /// No description provided for @combatGotData.
-  ///
-  /// In en, this message translates to:
-  /// **'Got {zenny}z and {chip}!'**
-  String combatGotData(int zenny, String chip);
-
   /// No description provided for @combatSelectChip.
   ///
   /// In en, this message translates to:
@@ -326,65 +644,11 @@ abstract class AppLocalizations {
   /// **'RETREAT'**
   String get combatRetreat;
 
-  /// No description provided for @bleTitle.
+  /// No description provided for @combatGotData.
   ///
   /// In en, this message translates to:
-  /// **'BLE RADAR'**
-  String get bleTitle;
-
-  /// No description provided for @bleScan.
-  ///
-  /// In en, this message translates to:
-  /// **'SCAN'**
-  String get bleScan;
-
-  /// No description provided for @bleStatus.
-  ///
-  /// In en, this message translates to:
-  /// **'Status: {status}'**
-  String bleStatus(String status);
-
-  /// No description provided for @bleNavisFound.
-  ///
-  /// In en, this message translates to:
-  /// **'Found Navis:'**
-  String get bleNavisFound;
-
-  /// No description provided for @bleConnect.
-  ///
-  /// In en, this message translates to:
-  /// **'Connect'**
-  String get bleConnect;
-
-  /// No description provided for @bleRadarRing.
-  ///
-  /// In en, this message translates to:
-  /// **'JACK IN'**
-  String get bleRadarRing;
-
-  /// No description provided for @bleScanning.
-  ///
-  /// In en, this message translates to:
-  /// **'SCANNING...'**
-  String get bleScanning;
-
-  /// No description provided for @bleScanForNavis.
-  ///
-  /// In en, this message translates to:
-  /// **'SCAN FOR NAVIS'**
-  String get bleScanForNavis;
-
-  /// No description provided for @bleNavisDetected.
-  ///
-  /// In en, this message translates to:
-  /// **'NAVIS DETECTED'**
-  String get bleNavisDetected;
-
-  /// No description provided for @bleDisc.
-  ///
-  /// In en, this message translates to:
-  /// **'DISC.'**
-  String get bleDisc;
+  /// **'Got {zenny}z and {chip}!'**
+  String combatGotData(int zenny, String chip);
 
   /// No description provided for @chipFolderTitle.
   ///
@@ -404,22 +668,64 @@ abstract class AppLocalizations {
   /// **'DMG: {damage}'**
   String chipDmg(int damage);
 
+  /// No description provided for @onboardingTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'WELCOME'**
+  String get onboardingTitle;
+
+  /// No description provided for @onboardingSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Create your Navi'**
+  String get onboardingSubtitle;
+
+  /// No description provided for @onboardingYes.
+  ///
+  /// In en, this message translates to:
+  /// **'YES'**
+  String get onboardingYes;
+
+  /// No description provided for @onboardingNo.
+  ///
+  /// In en, this message translates to:
+  /// **'NO'**
+  String get onboardingNo;
+
+  /// No description provided for @onboardingConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'CONFIRM'**
+  String get onboardingConfirm;
+
+  /// No description provided for @combatVictory.
+  ///
+  /// In en, this message translates to:
+  /// **'VICTORY!'**
+  String get combatVictory;
+
+  /// No description provided for @combatDefeat.
+  ///
+  /// In en, this message translates to:
+  /// **'DEFEAT...'**
+  String get combatDefeat;
+
+  /// No description provided for @chipFolderRarity.
+  ///
+  /// In en, this message translates to:
+  /// **'RARITY'**
+  String get chipFolderRarity;
+
   /// No description provided for @chipFolderAll.
   ///
   /// In en, this message translates to:
   /// **'ALL'**
   String get chipFolderAll;
 
-  /// No description provided for @chipFolderRarity.
-  ///
-  /// In en, this message translates to:
-  /// **'RARITY: '**
-  String get chipFolderRarity;
-
   /// No description provided for @chipFolderNoChips.
   ///
   /// In en, this message translates to:
-  /// **'NO CHIPS'**
+  /// **'No chips'**
   String get chipFolderNoChips;
 
   /// No description provided for @chipFolderDiscard.
@@ -433,6 +739,78 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'KEEP'**
   String get chipFolderKeep;
+
+  /// No description provided for @homeCyberMeter.
+  ///
+  /// In en, this message translates to:
+  /// **'CYBER METER'**
+  String get homeCyberMeter;
+
+  /// No description provided for @homeStepsToEncounter.
+  ///
+  /// In en, this message translates to:
+  /// **'Steps to Encounter: {steps}'**
+  String homeStepsToEncounter(int steps);
+
+  /// No description provided for @homeBattleVirus.
+  ///
+  /// In en, this message translates to:
+  /// **'BATTLE VIRUS'**
+  String get homeBattleVirus;
+
+  /// No description provided for @homeJackIn.
+  ///
+  /// In en, this message translates to:
+  /// **'JACK IN'**
+  String get homeJackIn;
+
+  /// No description provided for @homeDebug.
+  ///
+  /// In en, this message translates to:
+  /// **'DEBUG'**
+  String get homeDebug;
+
+  /// No description provided for @navChips.
+  ///
+  /// In en, this message translates to:
+  /// **'CHIPS'**
+  String get navChips;
+
+  /// No description provided for @chipBrowserNoChips.
+  ///
+  /// In en, this message translates to:
+  /// **'No chips'**
+  String get chipBrowserNoChips;
+
+  /// No description provided for @onlineRankedMatch.
+  ///
+  /// In en, this message translates to:
+  /// **'RANKED MATCH'**
+  String get onlineRankedMatch;
+
+  /// No description provided for @onlineCasualMatch.
+  ///
+  /// In en, this message translates to:
+  /// **'CASUAL MATCH'**
+  String get onlineCasualMatch;
+
+  /// No description provided for @onlineLeaderboards.
+  ///
+  /// In en, this message translates to:
+  /// **'LEADERBOARDS'**
+  String get onlineLeaderboards;
+
+  /// No description provided for @collectionProgress.
+  ///
+  /// In en, this message translates to:
+  /// **'{percent}%'**
+  String collectionProgress(int percent);
+
+  /// No description provided for @settingsProfile.
+  ///
+  /// In en, this message translates to:
+  /// **'PROFILE'**
+  String get settingsProfile;
 }
 
 class _AppLocalizationsDelegate

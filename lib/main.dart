@@ -18,7 +18,7 @@ import 'modules/combat/combat_provider.dart';
 // import 'modules/bluetooth/ble_provider.dart';
 import 'shared/theme/pet_theme.dart';
 import 'ui/pet_bottom_widget.dart';
-import 'ui/main_nav.dart';
+import 'ui/main_nav_advanced.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -107,15 +107,6 @@ void main() async {
   }
 }
 
-// Detect test environment via assert
-bool _runningInTest_main = false;
-void _detectTest_main() {
-  assert(() {
-    _runningInTest_main = true;
-    return true;
-  }());
-}
-
 class ProjectPetApp extends StatelessWidget {
   final bool hasNavi;
   const ProjectPetApp({super.key, required this.hasNavi});
@@ -138,7 +129,7 @@ class ProjectPetApp extends StatelessWidget {
         supportedLocales: AppLocalizations.supportedLocales,
         builder: (context, child) {
           WidgetsBinding.instance.addPostFrameCallback((_) {
-            if (!_runningInTest_main) {
+            if (!runningInTest) {
               try {
                 Provider.of<SingleplayerProvider>(context, listen: false).init();
               } catch (_) {}
@@ -146,9 +137,9 @@ class ProjectPetApp extends StatelessWidget {
           });
           return child ?? const SizedBox.shrink();
         },
-        // Primary entry point for mobile platforms: use a simple 3-tab nav
-        // (Pet, Chips, BLE). Keep existing route generator for deep links.
-        home: const MainNav(),
+        // Primary entry point for mobile platforms: use expanded 11-tab nav per UXBook.
+        // Keep existing route generator for deep links.
+        home: const MainNavAdvanced(),
         onGenerateRoute: AppRouter.generateRoute,
       ),
     );

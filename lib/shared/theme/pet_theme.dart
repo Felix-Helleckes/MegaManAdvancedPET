@@ -33,9 +33,8 @@ class PetTheme {
         onPrimary: Color(0xFF0D1117),
         onSurface: textPrimary,
       ),
-      textTheme: GoogleFonts.pressStart2pTextTheme(
-        ThemeData.dark().textTheme,
-      ).apply(
+      // Use a readable UI font for body text, keep press-start for titles
+      textTheme: GoogleFonts.interTextTheme(ThemeData.dark().textTheme).apply(
         bodyColor: textPrimary,
         displayColor: primary,
       ),
@@ -62,9 +61,9 @@ class PetTheme {
         style: ElevatedButton.styleFrom(
           backgroundColor: primary,
           foregroundColor: background,
-          textStyle: GoogleFonts.pressStart2p(fontSize: 10),
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
+          textStyle: GoogleFonts.inter(fontSize: 12, fontWeight: FontWeight.w600),
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
         ),
       ),
       dividerColor: border,

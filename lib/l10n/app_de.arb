@@ -1,58 +1,369 @@
 {
-    "appTitle": "Project PET",
-    "homeCyberMeter": "CYBER-METER",
-    "homeSteps": "{count} Schritte",
-    "homeStepsToEncounter": "{count} Schritte bis zum Kampf",
-    "homeZenny": "ZENNY",
-    "homeWins": "SIEGE",
-    "homeLosses": "NIEDERL.",
-    "homeBattleVirus": "VIRENKAMPF",
-    "homeJackIn": "JACK IN  [ BLE ]",
-    "homeDebug": "DEBUG",
-    "navHome": "HOME",
-    "navChips": "CHIPS",
+    "appTitle": "Project PET - Advanced",
+    
+    "@@locale": "de",
+    
+    "navHome": "STARTSEITE",
+    "navPetStatus": "STATUS",
+    "navEvolution": "ENTWICKLUNG",
+    "navChipBrowser": "CHIPS",
+    "navBattle": "KAMPF",
+    "navOnlineHub": "ONLINE",
+    "navCollection": "SAMMLUNG",
+    "navMissions": "MISSIONEN",
+    "navSettings": "EINSTELLUNGEN",
     "navBle": "BLE",
-    "virusAlertTitle": "⚠️ VIREN-ALARM",
-    "virusAlertMessage": "Ein Virus ist aufgetaucht!\nBereit zum Kampf?",
-    "virusAlertFlee": "FLUCHT",
+    
+    "screenStartTitle": "STARTSEITE / HOME",
+    "screenStatusTitle": "PET STATUS",
+    "screenEvolutionTitle": "ENTWICKLUNG",
+    "screenChipBrowserTitle": "CHIP ÜBERSICHT",
+    "screenChipDetailTitle": "CHIP DETAILS",
+    "screenBattleLocalTitle": "KAMPF (LOKAL)",
+    "screenBattleOnlineTitle": "KAMPF (ONLINE)",
+    "screenOnlineHubTitle": "ONLINE ZENTRUM",
+    "screenCollectionTitle": "SAMMLUNG",
+    "screenMissionsTitle": "MISSIONEN",
+    "screenSettingsTitle": "EINSTELLUNGEN",
+    
+    "petStatusHp": "KP: {current}/{max}",
+    "@petStatusHp": {
+        "placeholders": {
+            "current": {"type": "int"},
+            "max": {"type": "int"}
+        }
+    },
+    "petStatusLevel": "Stufe: {level}",
+    "@petStatusLevel": {
+        "placeholders": {
+            "level": {"type": "int"}
+        }
+    },
+    "petStatusExp": "EXP: {current}/{next}",
+    "@petStatusExp": {
+        "placeholders": {
+            "current": {"type": "int"},
+            "next": {"type": "int"}
+        }
+    },
+    "petStatusAttack": "ATTACKE: {value}",
+    "@petStatusAttack": {
+        "placeholders": {
+            "value": {"type": "int"}
+        }
+    },
+    "petStatusRapid": "SCHNELL: {value}",
+    "@petStatusRapid": {
+        "placeholders": {
+            "value": {"type": "int"}
+        }
+    },
+    "petStatusCharge": "LADUNG: {value}",
+    "@petStatusCharge": {
+        "placeholders": {
+            "value": {"type": "int"}
+        }
+    },
+    "petStatusHunger": "HUNGER: {value}%",
+    "@petStatusHunger": {
+        "placeholders": {
+            "value": {"type": "int"}
+        }
+    },
+    "petStatusHappiness": "FREUDE: {value}%",
+    "@petStatusHappiness": {
+        "placeholders": {
+            "value": {"type": "int"}
+        }
+    },
+    "petStatusCondition": "ZUSTAND: {status}",
+    "@petStatusCondition": {
+        "placeholders": {
+            "status": {"type": "String"}
+        }
+    },
+    "petStatusBond": "VERBINDUNG: {value}%",
+    "@petStatusBond": {
+        "placeholders": {
+            "value": {"type": "int"}
+        }
+    },
+    
+    "evolutionAvailable": "ENTWICKLUNG VERFÜGBAR!",
+    "evolutionReady": "Dein Navi ist bereit sich zu entwickeln!",
+    "evolutionChooseForm": "Wähle Entwicklungsform:",
+    "evolutionFormStandard": "STANDARD",
+    "evolutionFormMega": "MEGA",
+    "evolutionFormGiga": "GIGA",
+    "evolutionConfirm": "ENTWICKLUNG BESTÄTIGEN?",
+    "evolutionSuccess": "ENTWICKLUNG ABGESCHLOSSEN!",
+    
+    "chipBrowserAll": "ALLE",
+    "chipBrowserAttack": "ATTACKE",
+    "chipBrowserSupport": "UNTERSTÜTZUNG",
+    "chipBrowserMega": "MEGA",
+    "chipBrowserFilter": "FILTER",
+    "chipBrowserSort": "SORTIEREN",
+    "chipBrowserPower": "KRAFT",
+    "chipBrowserRapid": "SCHNELL",
+    "chipBrowserRange": "REICHWEITE",
+    "chipBrowserNoChips": "Keine Chips im Inventar",
+    
+    "chipDetailCode": "Code: {code}",
+    "@chipDetailCode": {
+        "placeholders": {
+            "code": {"type": "String"}
+        }
+    },
+    "chipDetailPower": "KRAFT: {power}",
+    "@chipDetailPower": {
+        "placeholders": {
+            "power": {"type": "int"}
+        }
+    },
+    "chipDetailRapid": "SCHNELL: {rapid}",
+    "@chipDetailRapid": {
+        "placeholders": {
+            "rapid": {"type": "int"}
+        }
+    },
+    "chipDetailRange": "REICHWEITE: {range}",
+    "@chipDetailRange": {
+        "placeholders": {
+            "range": {"type": "String"}
+        }
+    },
+    "chipDetailRarity": "SELTENHEIT: {rarity}",
+    "@chipDetailRarity": {
+        "placeholders": {
+            "rarity": {"type": "String"}
+        }
+    },
+    "chipDetailLibrary": "IN SAMMLUNG: {count}",
+    "@chipDetailLibrary": {
+        "placeholders": {
+            "count": {"type": "int"}
+        }
+    },
+    
+    "battleVsWild": "GEGEN VIRUS",
+    "battleVsOpponent": "GEGEN {name}",
+    "@battleVsOpponent": {
+        "placeholders": {
+            "name": {"type": "String"}
+        }
+    },
+    "battleRound": "RUNDE: {round}",
+    "@battleRound": {
+        "placeholders": {
+            "round": {"type": "int"}
+        }
+    },
+    "battleYourHp": "DEINE KP: {hp}",
+    "@battleYourHp": {
+        "placeholders": {
+            "hp": {"type": "int"}
+        }
+    },
+    "battleEnemyHp": "GEGNER KP: {hp}",
+    "@battleEnemyHp": {
+        "placeholders": {
+            "hp": {"type": "int"}
+        }
+    },
+    "battleSendChip": "CHIP SENDEN",
+    "battleSlashAttack": "SCHNEIDANGRIFF",
+    "battleFlee": "FLIEHEN",
+    "battleWait": "WARTEN",
+    "battleAttack": "ANGRIFF!",
+    "battleDefend": "VERTEIDIGUNG!",
+    "battleVictory": "SIEG!",
+    "battleDefeat": "NIEDERLAGE...",
+    "battleReward": "Belohnung: {zenny}z + {chip}",
+    "@battleReward": {
+        "placeholders": {
+            "zenny": {"type": "int"},
+            "chip": {"type": "String"}
+        }
+    },
+    "battleReturn": "ZUR STARTSEITE",
+    
+    "onlineRankedMatch": "RANGLISTENSPIEL",
+    "onlineCasualMatch": "FREUNDSCHAFTSSPIEL",
+    "onlineRoomMatch": "ZIMMERLUFTSPIEL",
+    "onlineFriends": "FREUNDE",
+    "onlineLeaderboards": "RANGLISTEN",
+    "onlineSearching": "SUCHE GEGNER...",
+    "onlineFound": "GEGNER GEFUNDEN!",
+    "onlineWaitingForApproval": "WARTE AUF ZUSTIMMUNG...",
+    
+    "collectionTotal": "GESAMT: {count}/{max}",
+    "@collectionTotal": {
+        "placeholders": {
+            "count": {"type": "int"},
+            "max": {"type": "int"}
+        }
+    },
+    "collectionProgress": "FORTSCHRITT: {percent}%",
+    "@collectionProgress": {
+        "placeholders": {
+            "percent": {"type": "int"}
+        }
+    },
+    "collectionRarity": "SELTENHEIT",
+    "collectionElement": "ELEMENT",
+    
+    "missionsAvailable": "VERFÜGBAR",
+    "missionsCompleted": "ABGESCHLOSSEN",
+    "missionsDifficulty": "SCHWIERIGKEIT: {level}",
+    "@missionsDifficulty": {
+        "placeholders": {
+            "level": {"type": "String"}
+        }
+    },
+    "missionsReward": "BELOHNUNG: {zenny}z",
+    "@missionsReward": {
+        "placeholders": {
+            "zenny": {"type": "int"}
+        }
+    },
+    "missionsProgress": "FORTSCHRITT: {current}/{total}",
+    "@missionsProgress": {
+        "placeholders": {
+            "current": {"type": "int"},
+            "total": {"type": "int"}
+        }
+    },
+    "achievementsUnlocked": "FREIGESCHALTET: {count}",
+    "@achievementsUnlocked": {
+        "placeholders": {
+            "count": {"type": "int"}
+        }
+    },
+    "achievementsTitle": "ERFOLGE",
+    
+    "settingsLanguage": "SPRACHE",
+    "settingsTheme": "DESIGN",
+    "settingsThemeBlue": "KLASSISCHES BLAU",
+    "settingsThemeRed": "ROT",
+    "settingsThemeBlack": "SCHWARZ",
+    "settingsThemeGreen": "GRÜN",
+    "settingsThemeYellow": "GELB",
+    "settingsSoundVolume": "SOUND: {percent}%",
+    "@settingsSoundVolume": {
+        "placeholders": {
+            "percent": {"type": "int"}
+        }
+    },
+    "settingsVibration": "VIBRATION",
+    "settingsOnOff": "AN / AUS",
+    "settingsProfile": "PROFIL",
+    "settingsFriends": "FREUNDE",
+    "settingsItemShop": "ITEM SHOP",
+    "settingsAbout": "ÜBER",
+    
+    "commonYes": "JA",
+    "commonNo": "NEIN",
+    "commonOk": "OK",
+    "commonCancel": "ABBRECHEN",
+    "commonConfirm": "BESTÄTIGEN",
+    "commonBack": "ZURÜCK",
+    "commonNext": "WEITER",
+    "commonClose": "SCHLIESSEN",
+    "commonLoading": "LÄDT...",
+    "commonError": "FEHLER",
+    "commonSuccess": "ERFOLG",
+    
+    "homeSteps": "{count} SCHRITTE",
+    "@homeSteps": {
+        "placeholders": {
+            "count": {"type": "int"}
+        }
+    },
+    "homeZenny": "ZENNY: {amount}",
+    "@homeZenny": {
+        "placeholders": {
+            "amount": {"type": "int"}
+        }
+    },
+    "homeWins": "SIEGE: {count}",
+    "@homeWins": {
+        "placeholders": {
+            "count": {"type": "int"}
+        }
+    },
+    "homeLosses": "NIEDERLAGEN: {count}",
+    "@homeLosses": {
+        "placeholders": {
+            "count": {"type": "int"}
+        }
+    },
+    
+    "virusAlertTitle": "⚠️ VIRUSWARNUNG",
+    "virusAlertMessage": "EIN VIRUS ERSCHIEN!",
+    "virusAlertFlee": "FLIEHEN",
     "virusAlertBattle": "KAMPF!",
-    "onboardingTitle": "WÄHLE DEINEN NETNAVI",
-    "onboardingSubtitle": "Wähle deinen Partner für die Cyber-Welt. Diese Wahl ist endgültig.",
-    "onboardingConfirm": "{name} BESTÄTIGEN?",
-    "onboardingYes": "JA",
-    "onboardingNo": "NEIN",
-    "combatVirusEncounter": "VIREN-BEGEGNUNG",
-    "combatPvP": "PVP-KAMPF",
-    "combatHp": "TP",
-    "combatStatus": "STATUS: {status}",
-    "combatFlee": "FLUCHT",
-    "combatSendChip": "CHIP SENDEN",
-    "combatSlash": ">> ANGRIFF! <<",
-    "combatWaiting": "WARTE AUF GEGNER...",
-    "combatVictory": "SIEG!",
-    "combatDefeat": "NIEDERLAGE...",
-    "combatReturn": "ZURÜCK",
-    "combatGotData": "Erhalten: {zenny}z und {chip}!",
-    "combatSelectChip": "CHIP WÄHLEN",
-    "combatShake": "GERÄT SCHÜTTELN ODER",
-    "combatAwesome": "KLASSE!",
-    "combatRetreat": "RÜCKZUG",
-    "bleTitle": "BLE-RADAR",
-    "bleScan": "SUCHEN",
+    
+    "bleRadarRing": "JACK IN",
+    "bleTitle": "BLE RADAR",
+    "bleScan": "SCANNEN",
     "bleStatus": "Status: {status}",
+    "@bleStatus": {"placeholders": {"status": {"type": "String"}}},
     "bleNavisFound": "Gefundene Navis:",
     "bleConnect": "Verbinden",
-    "bleRadarRing": "JACK IN",
-    "bleScanning": "SUCHE...",
-    "bleScanForNavis": "NAVIS SUCHEN",
+    "bleScanning": "SCANNE...",
+    "bleScanForNavis": "SCANNE NAVIS",
     "bleNavisDetected": "NAVIS ERKANNT",
-    "bleDisc": "TRENNEN",
-    "chipFolderTitle": "CHIP-ORDNER",
-    "chipFolderEmpty": "Dein Ordner ist leer.",
-    "chipDmg": "SCHDN: {damage}",
+    "bleDisc": "ENTDECKT",
+    
+    "combatVirusEncounter": "VIRENBEGENUNG",
+    "combatPvP": "PVP KAMPF",
+    "combatHp": "KP",
+    "combatStatus": "STATUS: {status}",
+    "@combatStatus": {"placeholders": {"status": {"type": "String"}}},
+    "combatFlee": "FLIEHEN",
+    "combatSendChip": "CHIP SENDEN",
+    "combatSlash": ">> SCHNITT! <<",
+    "combatWaiting": "WARTE AUF GEGNER...",
+    "combatSelectChip": "CHIP WÄHLEN",
+    "combatShake": "HANDY SCHÜTTELN ODER",
+    "combatAwesome": "FANTASTISCH!",
+    "combatRetreat": "RÜCKZUG",
+    "combatGotData": "Erhalten {zenny}z und {chip}!",
+    "@combatGotData": {"placeholders": {"zenny": {"type": "int"}, "chip": {"type": "String"}}},
+    
+    "chipFolderTitle": "CHIP MAPPE",
+    "chipFolderEmpty": "Deine Mappe ist leer.",
+    "chipDmg": "SCHAD: {damage}",
+    "@chipDmg": {"placeholders": {"damage": {"type": "int"}}},
+    
+    "onboardingTitle": "WILLKOMMEN",
+    "onboardingSubtitle": "Erstelle deinen Navi",
+    "onboardingYes": "JA",
+    "onboardingNo": "NEIN",
+    "onboardingConfirm": "BESTÄTIGEN",
+    
+    "combatVictory": "SIEG!",
+    "combatDefeat": "NIEDERLAGE...",
+    
+    "chipFolderRarity": "SELTENHEIT",
     "chipFolderAll": "ALLE",
-    "chipFolderRarity": "SELTENHEIT: ",
-    "chipFolderNoChips": "KEINE CHIPS",
-    "chipFolderDiscard": "WEGWERFEN",
-    "chipFolderKeep": "BEHALTEN"
+    "chipFolderNoChips": "Keine Chips",
+    "chipFolderDiscard": "VERWERFEN",
+    "chipFolderKeep": "BEHALTEN",
+    
+    "homeCyberMeter": "CYBER METER",
+    "homeStepsToEncounter": "Schritte bis Begegnung: {steps}",
+    "@homeStepsToEncounter": {"placeholders": {"steps": {"type": "int"}}},
+    "homeBattleVirus": "VIRUS KAMPF",
+    "homeJackIn": "JACK IN",
+    "homeDebug": "DEBUG",
+    "navChips": "CHIPS",
+    "chipBrowserNoChips": "Keine Chips",
+    "onlineRankedMatch": "RANKED KAMPF",
+    "onlineCasualMatch": "CASUAL KAMPF",
+    "onlineLeaderboards": "BESTENLISTEN",
+    "collectionProgress": "{percent}%",
+    "@collectionProgress": {"placeholders": {"percent": {"type": "int"}}},
+    "settingsProfile": "PROFIL"
 }
