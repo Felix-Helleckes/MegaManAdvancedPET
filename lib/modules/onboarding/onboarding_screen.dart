@@ -31,7 +31,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
         shape: const RoundedRectangleBorder(
           side: BorderSide(color: PetTheme.primary),
         ),
-        title: Text(loc.onboardingConfirm(selectedNavi), 
+        title: Text('${loc.onboardingConfirm} $selectedNavi', 
             style: GoogleFonts.pressStart2p(fontSize: 12, color: PetTheme.primary)),
         content: Text(loc.onboardingSubtitle, 
             style: GoogleFonts.pressStart2p(fontSize: 8, color: PetTheme.textPrimary)),

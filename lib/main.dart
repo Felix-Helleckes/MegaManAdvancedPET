@@ -14,8 +14,8 @@ import 'core/models/battle_chip.dart';
 import 'modules/singleplayer/step_service.dart';
 import 'modules/singleplayer/singleplayer_provider.dart';
 import 'modules/combat/combat_provider.dart';
-// Bluetooth provider disabled at startup to avoid emulator/system issues
-// import 'modules/bluetooth/ble_provider.dart';
+import 'modules/bluetooth/ble_provider.dart';
+import 'modules/online/online_service.dart';
 import 'shared/theme/pet_theme.dart';
 import 'ui/pet_bottom_widget.dart';
 import 'ui/main_nav_advanced.dart';
@@ -119,7 +119,8 @@ class ProjectPetApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(create: (_) => SingleplayerProvider()),
         ChangeNotifierProvider(create: (_) => CombatProvider()),
-        // BleProvider omitted to isolate startup crash and for emulator stability
+        ChangeNotifierProvider(create: (_) => BleProvider()),
+        ChangeNotifierProvider(create: (_) => OnlineService()),
       ],
       child: MaterialApp(
         title: 'Project PET',
